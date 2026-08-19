@@ -1,0 +1,154 @@
+---
+// src/components/sections/Training.astro
+// The Mastering AI flagship programme — 6 modules (bento) + 5 deliverables + USP strip + video.
+export interface Props { locale: 'en' | 'zh'; }
+const { locale } = Astro.props;
+const isZh = locale === 'zh';
+
+const modules = isZh ? [
+  { num: '01', title: 'AI 基础与思维', body: '理解 AI 工具真正的工作原理,从第一天起就以 AI 原住民的方式思考。' },
+  { num: '02', title: 'AI 提示基础', body: '学会 RTOF 公式,让每个 AI 工具好用 10 倍。带 10 个现成提示词回家。' },
+  { num: '03', title: '智能提示技巧', body: '用 AI 研究竞品、趋势、客户洞察,比任何手动流程都快。' },
+  { num: '04', title: 'AI 工作流搭建', body: '挑出 5 个每天都不再手动做的任务。明天就能用的个人 AI 工具箱。' },
+  { num: '05', title: 'Canva + AI 设计', body: '创建专业图形、社交媒体帖和广告视觉 — 无需设计师。' },
+  { num: '06', title: 'AI 智能体与技能', body: '搭建记得您工作方式和品牌声音的 AI 助手。配置一次,永久使用。' },
+] : [
+  { num: '01', title: 'AI Foundations & Mindset', body: "Understand how AI tools actually work — and how to think like an AI-native professional from day one." },
+  { num: '02', title: 'AI Prompting Basics', body: 'Learn the RTOF formula that makes every AI tool 10× more useful. Walk away with 10 ready-made prompts for your specific work tasks.' },
+  { num: '03', title: 'Smart Prompting Techniques', body: 'Use AI to research competitors, trends, and customer insights faster than any manual process.' },
+  { num: '04', title: 'AI Workflow Setup', body: "Pick 5 daily tasks you'll never do manually again. Walk out with your personal AI toolkit ready to use tomorrow." },
+  { num: '05', title: 'Canva + AI Design', body: 'Create professional graphics, social media posts, and ad visuals for your business — no designer needed.' },
+  { num: '06', title: 'AI Agents & Skills', body: 'Build your own AI assistants that remember how you work and your brand voice. Set up once, use forever.' },
+];
+
+const deliverables = isZh ? [
+  '10 个日常任务的复制即用 AI 提示模板',
+  '一个搭建并测试好的个人 AI 助手 (Gemini Gem)',
+  '一个可用于业务的 Canva 视觉模板',
+  '一份用您自己内容搭建的 Gamma 演示',
+  '一份下周要做的 5 任务 AI 行动计划',
+] : [
+  '10 copy-paste AI prompt templates for daily work tasks',
+  'A personal AI assistant (Gemini Gem) set up and tested',
+  'A Canva visual template ready to reuse for your business',
+  'A Gamma presentation built from your own content',
+  'A written 5-task AI action plan for the week ahead',
+];
+
+const usps = isZh ? [
+  { icon: '🎯', title: '由全职营销人授课', body: '不是技术顾问。' },
+  { icon: '✋', title: '实战培训', body: '不只是理论。' },
+  { icon: '🆓', title: '全部免费工具', body: '无需订阅。' },
+  { icon: '💻', title: '现场实操', body: '用真实 AI 工具。' },
+  { icon: '🏆', title: '完成证书', body: '每位学员获得。' },
+  { icon: '📋', title: '个人 AI 行动计划', body: '每位学员带走。' },
+] : [
+  { icon: '🎯', title: 'Taught by a full-time marketer', body: 'Not a tech consultant.' },
+  { icon: '✋', title: 'Hands-on, practical training', body: 'Not just theory.' },
+  { icon: '🆓', title: 'All free tools', body: 'No subscription required.' },
+  { icon: '💻', title: 'Live exercises', body: 'With real AI tools.' },
+  { icon: '🏆', title: 'Completion certificate', body: 'Every participant.' },
+  { icon: '📋', title: 'Personal AI action plan', body: 'Every participant.' },
+];
+---
+
+<section class="section" id="training">
+  <div class="container-2xl">
+    <!-- Heading -->
+    <div style="text-align: center; max-width: 700px; margin: 0 auto 32px;">
+      <span class="badge badge--outlined" style="margin-bottom: 12px;">{isZh ? '旗舰课程' : 'Flagship Programme'}</span>
+      <h2 style="margin: 0 0 16px; font-size: clamp(2rem, 3.5vw + 1rem, 3.5rem);">
+        {isZh ? '掌握 AI:聪明的提示、锋利的写作、扎实的研究' : 'Mastering AI: Smart Prompts, Sharp Writing, Solid Research'}
+      </h2>
+      <p style="color: var(--muted-foreground); font-size: 1.125rem;">
+        {isZh ? '为职场人士打造的完整 AI 培训方案' : 'A complete AI training programme for working professionals'}
+      </p>
+      <p style="max-width: 55ch; margin: 24px auto 0; color: var(--muted-foreground);">
+        {isZh
+          ? '一次 5 小时的培训,让学员从好奇到能干 — 第二天上班就用得上的真实 AI 工作流。'
+          : 'In a single 5-hour session, participants go from curious to capable — building real AI workflows they use the very next day at work.'}
+      </p>
+    </div>
+
+    <!-- Format strip -->
+    <div style="display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; margin-bottom: 64px;">
+      <span class="badge badge--subtle">⏱ {isZh ? '半天 / 全天' : 'Half-Day / Full-Day'}</span>
+      <span class="badge badge--subtle">👥 {isZh ? '最少 10 人' : 'Min 10 pax'}</span>
+      <span class="badge badge--subtle">🗣 EN / 中文</span>
+      <span class="badge badge--subtle">💻 {isZh ? '笔记本或手机' : 'Laptop or phone'}</span>
+    </div>
+
+    <!-- 6 modules (3x2 grid) -->
+    <div style="display: grid; grid-template-columns: 1fr; gap: 16px;" class="training-modules">
+      <style>
+        @media (min-width: 640px) { .training-modules { grid-template-columns: 1fr 1fr !important; } }
+        @media (min-width: 1024px) { .training-modules { grid-template-columns: 1fr 1fr 1fr !important; } }
+      </style>
+      {modules.map(m => (
+        <div class="card">
+          <div class="text-mono" style="font-size: 12px; color: var(--primary); font-weight: 600; margin-bottom: 8px;">{m.num}</div>
+          <h4 style="margin: 0 0 8px;">{m.title}</h4>
+          <p style="font-size: 14px; color: var(--muted-foreground); line-height: 1.5; margin: 0;">{m.body}</p>
+        </div>
+      ))}
+    </div>
+
+    <!-- Deliverables -->
+    <div style="margin-top: 64px;">
+      <h3 style="margin: 0 0 24px;">{isZh ? '您的 AI 行动计划 — 5 项交付物' : 'Your AI Action Plan — 5 deliverables'}</h3>
+      <ul style="list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 12px;">
+        {deliverables.map((d, i) => (
+          <li style="display: flex; align-items: flex-start; gap: 12px; padding: 16px; border: 1px solid var(--border); border-radius: var(--radius-md);">
+            <span class="text-mono" style="color: var(--primary); font-weight: 600; flex-shrink: 0;">{String(i + 1).padStart(2, '0')}</span>
+            <span style="font-size: 15px;">{d}</span>
+          </li>
+        ))}
+      </ul>
+    </div>
+
+    <!-- USP strip -->
+    <div style="margin-top: 64px;">
+      <h3 style="margin: 0 0 24px;">{isZh ? 'Reese Tan 的优势' : "Reese Tan's Edge"}</h3>
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;" class="usp-strip">
+        <style>
+          @media (min-width: 768px) { .usp-strip { grid-template-columns: 1fr 1fr 1fr !important; } }
+        </style>
+        {usps.map(u => (
+          <div class="card" style="padding: 16px;">
+            <div style="font-size: 24px; margin-bottom: 4px;">{u.icon}</div>
+            <div style="font-size: 14px; font-weight: 600; margin-bottom: 4px;">{u.title}</div>
+            <div style="font-size: 13px; color: var(--muted-foreground);">{u.body}</div>
+          </div>
+        ))}
+      </div>
+    </div>
+
+    <!-- Video -->
+    <div style="margin-top: 64px;">
+      <h3 style="margin: 0 0 16px;">
+        {isZh ? 'AI 工具实操演示' : 'AI Tools in Action — Watch This'}
+      </h3>
+      <div style="aspect-ratio: 16/9; border-radius: var(--radius-xl); overflow: hidden; box-shadow: 0 2px 4px oklch(0% 0 0 / 0.04), 0 8px 24px oklch(0% 0 0 / 0.06);">
+        <video
+          controls
+          preload="metadata"
+          playsinline
+          poster="/images/aichatbot-demo-poster.jpg"
+          style="width: 100%; height: 100%; background: #000;"
+          aria-label={isZh ? 'AI 工具实操演示视频' : 'AI tools live demo video'}
+        >
+          <source src="/videos/aichatbot-demo.mp4" type="video/mp4" />
+          <p>{isZh ? '您的浏览器不支持视频。' : 'Your browser does not support video.'} <a href="https://www.youtube.com/shorts/F_xJ25AFyCM" target="_blank" rel="noopener">{isZh ? '在 YouTube 上观看' : 'Watch on YouTube'}</a></p>
+        </video>
+      </div>
+      <p style="margin-top: 12px; color: var(--muted-foreground); font-size: 14px;">
+        {isZh
+          ? 'AI 工具实操演示 — 这就是您将在培训中学会构建的。'
+          : 'A live demonstration of AI tools in action — exactly what you\'ll learn to build in the training.'}{' '}
+        <a href="https://www.youtube.com/shorts/F_xJ25AFyCM" target="_blank" rel="noopener" style="color: var(--primary); font-weight: 500;">
+          {isZh ? '在 YouTube 上观看 →' : 'Watch on YouTube →'}
+        </a>
+      </p>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,157 @@
+---
+// src/components/sections/Hero.astro
+// Above-the-fold hero. Order (per design system spec):
+//   credential pills → H1 → sub → description → chips → CTA + risk reducer
+//   → trust line → portrait card
+// Right column: portrait card with LPPEH badge.
+
+import CalEmbed from '../booking/CalEmbed.astro';
+
+export interface Props {
+  locale: 'en' | 'zh';
+}
+const { locale } = Astro.props;
+const isZh = locale === 'zh';
+---
+
+<section class="section section--hero" id="hero">
+  <div class="container-2xl">
+    <div style="display: grid; grid-template-columns: 1fr; gap: 64px;" class="hero-grid">
+      <style>
+        @media (min-width: 1024px) {
+          .hero-grid { grid-template-columns: 1.1fr 0.9fr !important; align-items: center; }
+        }
+      </style>
+
+      <!-- LEFT: copy + CTAs + booking -->
+      <div>
+        <!-- Credential pills -->
+        <div style="display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 24px;">
+          <span class="badge badge--outlined">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+            {isZh ? 'HRDC 认证培训师' : 'HRDC Accredited Trainer'}
+          </span>
+          <span class="badge badge--outlined">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+            {isZh ? 'HRD Corp 可报销' : 'HRD Corp Claimable'}
+          </span>
+          <span class="badge badge--outlined">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/></svg>
+            {isZh ? 'LPPEH 5 CPD 学时' : 'LPPEH 5 CPD Hours'}
+          </span>
+        </div>
+
+        <!-- H1 — kinetic Fraunces (Option B signature) -->
+        <h1 class="kinetic-fraunces" style="margin: 0 0 16px;">
+          {isZh ? (
+            <>把每周浪费的<br><span class="text-coral">10 小时</span><br>还给团队</>
+          ) : (
+            <>Stop Wasting<br><span class="text-coral">10 Hours a Week</span><br>on Manual Work.</>
+          )}
+        </h1>
+
+        <!-- Sub-headline -->
+        <p style="font-size: 1.25rem; line-height: 1.4; color: var(--foreground); max-width: 50ch; margin: 0 0 16px;">
+          {isZh
+            ? '您的团队已经在用 AI 了 — 但用对了吗?'
+            : 'Your team is already using AI — but are they using it the right way?'}
+        </p>
+
+        <!-- Description -->
+        <p style="color: var(--muted-foreground); max-width: 55ch; margin: 0 0 24px;">
+          {isZh
+            ? '一次 5 小时的实战培训,团队学会用免费 AI 工具把内容创作时间减少 70%、写作更快、研究更智能,并搭建出每天都在用的 AI 工作流。'
+            : 'In one hands-on session, your team learns to cut content creation time by 70%, write faster, research smarter, and build AI workflows they\'ll use every single day — using only free tools.'}
+        </p>
+
+        <!-- Chips -->
+        <div style="display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 32px;">
+          <span class="badge badge--subtle">⏱ {isZh ? '每周节省 10+ 小时' : 'Save 10+ hrs/week'}</span>
+          <span class="badge badge--subtle">📣 {isZh ? '写作快 10 倍' : 'Write 10x faster'}</span>
+          <span class="badge badge--subtle">📊 {isZh ? '秒级研究' : 'Research in seconds'}</span>
+          <span class="badge badge--subtle">🚀 {isZh ? '团队效率倍增' : 'Boost team productivity'}</span>
+        </div>
+
+        <!-- CTAs + risk reducer -->
+        <div class="hero-cta" style="margin-bottom: 40px;">
+          <div style="display: flex; flex-wrap: wrap; gap: 12px;">
+            <a href="#booking" class="btn btn--primary btn--lg">
+              {isZh ? '预约免费咨询' : 'Book a Free Consultation'}
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7" strokeLinecap="round" strokeLinejoin="round"/></svg>
+            </a>
+            <a href="#training" class="btn btn--secondary btn--lg">
+              {isZh ? '了解课程' : 'Explore Training'}
+            </a>
+          </div>
+          <div class="hero-cta__reducer">
+            {isZh ? '免费 15 分钟通话 · 无承诺 · 周一至周五 9–6 (MYT)' : 'Free 15-min call · No commitment · Mon–Fri 9–6 MYT'}
+          </div>
+        </div>
+
+        <!-- Trust line -->
+        <div style="display: flex; align-items: center; gap: 12px; padding: 16px 0; border-top: 1px solid var(--border);">
+          <div style="display: flex; gap: 2px;">
+            {[1,2,3,4,5].map(() => (
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="oklch(75% 0.18 60)">
+                <path d="M12 .587l3.668 7.568L24 9.75l-6 5.847L19.336 24 12 19.897 4.664 24 6 15.597 0 9.75l8.332-1.595z"/>
+              </svg>
+            ))}
+          </div>
+          <div style="font-size: 14px;">
+            <strong>4.8/5</strong> <span style="color: var(--muted-foreground);">{isZh ? '来自 Google 评论' : 'from Google Reviews'}</span>
+          </div>
+          <div style="font-size: 14px; color: var(--muted-foreground); margin-left: auto;">
+            {isZh ? '已培训 500+ 专业人士' : '500+ professionals trained'}
+          </div>
+        </div>
+      </div>
+
+      <!-- RIGHT: portrait card -->
+      <div style="position: relative;">
+        <div class="card" style="padding: 0; overflow: hidden; position: relative; aspect-ratio: 4/5; box-shadow: 0 4px 12px oklch(0% 0 0 / 0.06), 0 20px 48px oklch(0% 0 0 / 0.12);">
+          <img
+            src="/images/reese-real-portrait.jpg"
+            alt={isZh ? 'Reese Tan,AI 培训师' : 'Reese Tan, AI trainer'}
+            style="width: 100%; height: 100%; object-fit: cover;"
+            loading="eager"
+            fetchpriority="high"
+            width="640"
+            height="800"
+          />
+          <!-- LPPEH badge top-right -->
+          <div style="position: absolute; top: 16px; right: 16px; padding: 8px 14px; background: var(--primary); color: white; border-radius: 999px; font-size: 11px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase;">
+            LPPEH · 5 CPD
+          </div>
+          <!-- Bottom info bar -->
+          <div style="position: absolute; bottom: 0; left: 0; right: 0; padding: 20px; background: linear-gradient(to top, oklch(0% 0 0 / 0.7), transparent); color: white;">
+            <div style="font-size: 12px; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; opacity: 0.85;">Reese Tan</div>
+            <div style="font-size: 14px; font-weight: 500;">AI Trainer · Digital Marketing Strategist</div>
+          </div>
+        </div>
+        <!-- Floating stat card -->
+        <div class="card" style="position: absolute; bottom: -24px; left: -24px; padding: 16px 20px; max-width: 200px;">
+          <div class="text-mono" style="font-size: 1.75rem; font-weight: 700; color: var(--primary); line-height: 1;">70%</div>
+          <div style="font-size: 12px; color: var(--muted-foreground); margin-top: 4px;">
+            {isZh ? '内容创作时间减少' : 'content creation time saved'}
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Booking section (Cal.com embed) -->
+    <div id="booking" style="margin-top: 96px;">
+      <div style="text-align: center; max-width: 600px; margin: 0 auto 32px;">
+        <span class="badge badge--outlined" style="margin-bottom: 12px;">{isZh ? '预约咨询' : 'Book a Consultation'}</span>
+        <h2 style="margin: 0 0 12px;">
+          {isZh ? '挑一个适合您的时间' : 'Pick a time that works for you'}
+        </h2>
+        <p style="color: var(--muted-foreground);">
+          {isZh
+            ? '15 分钟免费通话,了解您团队的痛点,给出具体建议。'
+            : '15-minute free call. We\'ll talk through your team\'s pain points and I\'ll give you specific, actionable advice.'}
+        </p>
+      </div>
+      <CalEmbed layout="month_view" />
+    </div>
+  </div>
+</section>

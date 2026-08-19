@@ -1,0 +1,37 @@
+---
+// src/pages/zh/index.astro
+// Chinese mirror of the home page.
+
+import Base from '../../layouts/Base.astro';
+import Hero from '../../components/sections/Hero.astro';
+import About from '../../components/sections/About.astro';
+import Services from '../../components/sections/Services.astro';
+import Training from '../../components/sections/Training.astro';
+import PastTraining from '../../components/sections/PastTraining.astro';
+import FAQ from '../../components/sections/FAQ.astro';
+import Contact from '../../components/sections/Contact.astro';
+import { personSchema, courseSchema, breadcrumbSchema } from '../../lib/seo';
+
+const zh = 'zh';
+---
+
+<Base
+  title="Reese Tan | AI 培训师 — 中小企业 & 企业团队"
+  description="Reese Tan 是获得 HRDC 认证的 AI 培训师,也是全职数字营销策略顾问。帮助中小企业主和企业团队用 AI 替代重复工作,花更少时间做更多事。马来西亚 HRD Corp 可报销,LPPEH 5 CPD 学时。"
+  path="/zh"
+  jsonLd={[
+    personSchema(),
+    courseSchema(),
+    breadcrumbSchema([
+      { name: '首页', url: 'https://reesetan.com/zh' },
+    ]),
+  ]}
+>
+  <Hero locale={zh} />
+  <About locale={zh} />
+  <Services locale={zh} />
+  <Training locale={zh} />
+  <PastTraining locale={zh} />
+  <FAQ locale={zh} />
+  <Contact locale={zh} />
+</Base>

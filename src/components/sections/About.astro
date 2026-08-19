@@ -1,0 +1,90 @@
+---
+// src/components/sections/About.astro
+// About Reese — origin story, stat banner, photo grid.
+export interface Props { locale: 'en' | 'zh'; }
+const { locale } = Astro.props;
+const isZh = locale === 'zh';
+---
+
+<section class="section" id="about">
+  <div class="container-2xl">
+    <div style="display: grid; grid-template-columns: 1fr; gap: 64px; align-items: start;" class="about-grid">
+      <style>
+        @media (min-width: 1024px) {
+          .about-grid { grid-template-columns: 1fr 1fr !important; gap: 96px !important; }
+        }
+      </style>
+
+      <div>
+        <span class="badge badge--outlined" style="margin-bottom: 16px;">{isZh ? '关于 Reese' : 'About Reese'}</span>
+        <h2 style="margin: 0 0 24px;">
+          {isZh ? '我不是技术出身。' : "I didn't come from tech."}
+          <br><span style="color: var(--primary);">{isZh ? '我来自营销。' : 'I came from marketing.'}</span>
+        </h2>
+        <p style="font-size: 1.125rem; line-height: 1.7; margin-bottom: 16px;">
+          {isZh
+            ? '在 SME 增长、企业营销、数字广告、内容策略和业务拓展领域积累 15+ 年经验。HRDC 认证培训师,英中双语。'
+            : '15+ years across SME growth, corporate marketing, digital advertising, content strategy, and business development. HRDC Accredited Trainer. Bilingual in English and Mandarin.'}
+        </p>
+        <p style="font-size: 1.125rem; line-height: 1.7; margin-bottom: 24px;">
+          {isZh
+            ? '我用训练自己的方式训练学员 — 实战、实用、结果导向。'
+            : "I train the way I work — hands-on, practical, and results-first."}
+        </p>
+
+        <!-- Stat banner -->
+        <div class="card" style="background: var(--primary-wash); border: none; padding: 32px; margin: 32px 0;">
+          <div style="font-size: 1.125rem; line-height: 1.5;">
+            {isZh ? '帮一个 SME 营销团队把' : 'Helped an SME marketing team cut'}
+            <span class="text-mono" style="font-weight: 700; color: var(--primary); font-size: 1.5rem;"> 70% </span>
+            {isZh
+              ? '的内容创作时间砍下来 — 输出质量不变,工作量大幅减少,培训后 30 天内见效。'
+              : 'content creation time by 70% — same output quality, a fraction of the effort, within 30 days of training.'}
+          </div>
+        </div>
+
+        <p style="font-size: 1rem; color: var(--muted-foreground);">
+          {isZh
+            ? '已培训 500+ 专业人士,覆盖中小企业、企业团队、地产代理和营销部门。'
+            : '500+ professionals trained across SMEs, corporate teams, real estate agencies, and marketing departments.'}
+        </p>
+      </div>
+
+      <!-- Photo grid -->
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+        <img
+          src="/images/training-presenting.jpg"
+          alt={isZh ? 'Reese Tan 在培训中演讲' : 'Reese Tan presenting at training'}
+          style="width: 100%; aspect-ratio: 1/1; object-fit: cover; border-radius: var(--radius-md);"
+          loading="lazy"
+          width="400"
+          height="400"
+        />
+        <img
+          src="/images/training-handson.jpg"
+          alt={isZh ? '培训中的实操环节' : 'Hands-on training in session'}
+          style="width: 100%; aspect-ratio: 1/1; object-fit: cover; border-radius: var(--radius-md); margin-top: 32px;"
+          loading="lazy"
+          width="400"
+          height="400"
+        />
+        <img
+          src="/images/training-coaching.jpg"
+          alt={isZh ? '一对一指导' : 'One-on-one coaching'}
+          style="width: 100%; aspect-ratio: 1/1; object-fit: cover; border-radius: var(--radius-md);"
+          loading="lazy"
+          width="400"
+          height="400"
+        />
+        <img
+          src="/images/training-classroom.webp"
+          alt={isZh ? '培训教室现场' : 'Training classroom'}
+          style="width: 100%; aspect-ratio: 1/1; object-fit: cover; border-radius: var(--radius-md); margin-top: 32px;"
+          loading="lazy"
+          width="400"
+          height="400"
+        />
+      </div>
+    </div>
+  </div>
+</section>

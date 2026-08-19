@@ -1,0 +1,71 @@
+---
+// src/components/sections/FAQ.astro
+// 10 Q&A accordion. One open by default. Each Q gets the display face.
+
+export interface Props { locale: 'en' | 'zh'; }
+const { locale } = Astro.props;
+const isZh = locale === 'zh';
+
+const faqs = isZh ? [
+  { q: 'Reese Tan 是谁?她做什么?', a: 'Reese Tan 是获得 HRDC 认证的 AI 培训师,也是全职数字营销策略顾问,在马来西亚有 15+ 年实战经验。她帮助中小企业主、企业团队和地产从业者用 AI 工具替代重复任务,花更少时间做更多事。她不是技术顾问,而是每天都用 AI 的实战派营销人。' },
+  { q: 'Reese Tan 培训中教哪些 AI 工具?', a: '培训涵盖 6 个免费 AI 工具:Gemini 和 NotebookLM 用于研究与文档分析、Canva AI 用于设计与营销视觉、AI 智能体用于搭建个人助手、Gamma 用于创建客户演示。全部免费 — 无需订阅。' },
+  { q: '培训是 HRD Corp (HRDF) 可报销的吗?', a: '是的。Reese Tan 是 HRDC 认证培训师,她的 Mastering AI 课程 HRD Corp 可报销。在马来西亚注册了 HRD Corp 的公司可以用培训费补贴或全额覆盖员工培训。' },
+  { q: '适合中小企业主和非技术人员吗?', a: '适合。培训专门为中小企业主、业务经理、营销团队和企业员工设计,无需 IT 或技术背景。100% 实战,涵盖写作、研究、设计和客户沟通等真实业务任务。' },
+  { q: '可以为企业团队做内训吗?', a: '可以。Reese Tan 为企业团队和 SME 提供定制化内训,最少 10 人起。课程可以根据您的行业、团队规模和具体业务工作流定制。可以在您的办公室或在 PJ 的 Hartamas 培训中心进行。' },
+  { q: '培训是 LPPEH 批准的吗?可以拿 CPD 学时吗?', a: '是的。Mastering AI 课程获 LPPEH 批准,提供 5 CPD 学时。地产代理、谈判师、估价师和物业经理参加培训可以获得 CPD 积分。' },
+  { q: '培训多长时间?什么形式?', a: '5 小时,从 9:30 到 15:45。100% 实战工作坊 — 学员在课堂上用真实 AI 工具练习。需要自带笔记本或手机。英语授课,提供中文支持。' },
+  { q: '学员培训后能带走什么?', a: '5 项具体成果:(1) 10 个日常任务的 AI 提示模板,(2) 搭建好的个人 AI 助手,(3) 可复用的 Canva 模板,(4) 用自己内容搭建的 Gamma 演示,(5) 下周的 5 任务 AI 行动计划。' },
+  { q: 'Reese 跟其他 AI 培训师有什么不同?', a: '其他培训师大多来自技术或学术背景。Reese 是全职实战派营销人,每天在工作中用 AI 工具,只教她亲自测试并验证过的东西。培训实用、业务聚焦、立即可用 — 不是理论。她还是 HRDC 认证、LPPEH 批准的培训师。' },
+  { q: '培训在哪里进行?', a: '公开工作坊在 Hartamas 培训中心进行,地址:Level 13, Block A, Menara Prima, Jalan PJU 1/37, Dataran Prima, Petaling Jaya。企业内训可以在马来西亚任何地点进行。' },
+] : [
+  { q: 'Who is Reese Tan and what does she do?', a: 'Reese Tan is a HRDC-accredited AI Trainer and full-time Digital Marketing Strategist based in Malaysia. With 15+ years of real marketing experience, she helps SME owners, corporate teams, and property professionals replace manual tasks with AI tools — so they can do more in less time. She is not a tech consultant; she is a practising marketer who uses AI every day and teaches exactly what works in real business.' },
+  { q: 'What AI tools does Reese Tan teach?', a: 'The training covers 6 free AI tools: Gemini and NotebookLM for research and document analysis, Canva AI for design and marketing visuals, AI Agents for building personal assistants, and Gamma for client presentations. All tools are free — no subscription required.' },
+  { q: 'Is the training HRD Corp (HRDF) claimable?', a: 'Yes. Reese Tan is an HRDC Accredited Trainer and her Mastering AI programme is HRD Corp Claimable. Companies registered with HRD Corp in Malaysia can use their levy funds to subsidise or fully cover the training fee for their employees.' },
+  { q: 'Is this training suitable for SME owners and non-technical staff?', a: 'Yes. The training is specifically designed for SME owners, business managers, marketing teams, and corporate staff who want to use AI in their daily work — no IT or technical background required. The programme is 100% hands-on and practical.' },
+  { q: 'Can Reese conduct in-house AI training for corporate teams?', a: 'Yes. Reese Tan offers customised in-house AI training for corporate teams and SMEs with a minimum of 10 participants. The programme can be tailored to your industry, team size, and specific business workflows. Sessions can be conducted at your office or at Hartamas Training Centre in Petaling Jaya.' },
+  { q: 'Is the training approved by LPPEH for CPD hours?', a: 'Yes. The Mastering AI programme is approved by LPPEH (Lembaga Penilai, Pentaksir, Ejen Harta Tanah dan Pengurus Harta) for 5 CPD Hours. Real estate agents, negotiators, valuers, and property managers can claim CPD points by attending this training.' },
+  { q: 'How long is the training and what is the format?', a: 'The programme runs for 5 hours, from 9:30am to 3:45pm. It is a 100% hands-on workshop — participants practise with real AI tools during the session. Participants should bring their own laptop or smartphone. The training is conducted in English with Mandarin support available.' },
+  { q: 'What will participants walk away with?', a: '5 tangible deliverables: (1) 10 copy-paste AI prompt templates for daily work tasks, (2) a personal AI assistant (Gemini Gem) set up and tested, (3) a Canva template ready to reuse, (4) a Gamma presentation built from your own content, (5) a written 5-task AI action plan for the week ahead.' },
+  { q: 'How is Reese different from other AI trainers in Malaysia?', a: 'Unlike most AI trainers who come from a tech or academic background, Reese Tan is a full-time practising marketer. She uses AI tools in her own marketing work every day and teaches only what she has personally tested and proven to save time. She is HRDC Accredited and LPPEH Approved, making her training claimable under HRD Corp.' },
+  { q: 'Where is the training conducted?', a: 'Public workshops are conducted at Hartamas Training Centre, Level 13, Block A, Menara Prima, Petaling Jaya. In-house corporate training can be conducted at your company premises anywhere in Malaysia.' },
+];
+---
+
+<section class="section" id="faq-section">
+  <div class="container-narrow">
+    <div style="text-align: center; max-width: 600px; margin: 0 auto 48px;">
+      <span class="badge badge--outlined" style="margin-bottom: 12px;">{isZh ? '常见问题' : 'FAQ'}</span>
+      <h2 style="margin: 0 0 12px;">{isZh ? '常见问题' : 'Frequently asked'}</h2>
+    </div>
+
+    <div class="faq-list" style="border-top: 1px solid var(--border);">
+      {faqs.map((faq, i) => (
+        <details class="faq-item" open={i === 0} style="border-bottom: 1px solid var(--border); padding: 20px 0;">
+          <summary style="cursor: pointer; list-style: none; display: flex; justify-content: space-between; align-items: start; gap: 16px;">
+            <span style="font-family: var(--font-display); font-size: 1.125rem; font-weight: 500; line-height: 1.4;">{faq.q}</span>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="flex-shrink: 0; transition: transform 200ms ease;" class="faq-chevron">
+              <path d="M6 9l6 6 6-6" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </summary>
+          <p style="margin: 16px 0 0; color: var(--muted-foreground); line-height: 1.6;">{faq.a}</p>
+        </details>
+      ))}
+    </div>
+
+    <div style="text-align: center; margin-top: 48px;">
+      <p style="color: var(--muted-foreground); margin-bottom: 16px;">{isZh ? '还有问题?' : 'Still have questions?'}</p>
+      <a href="https://wa.me/60163356790" target="_blank" rel="noopener" class="btn btn--secondary">
+        {isZh ? 'WhatsApp 我' : 'WhatsApp me'}
+      </a>
+    </div>
+  </div>
+</section>
+
+<script is:inline>
+  document.querySelectorAll('.faq-item').forEach(item => {
+    item.addEventListener('toggle', () => {
+      const chevron = item.querySelector('.faq-chevron');
+      if (chevron) chevron.style.transform = item.open ? 'rotate(180deg)' : 'rotate(0deg)';
+    });
+  });
+</script>

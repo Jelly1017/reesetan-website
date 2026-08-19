@@ -1,0 +1,517 @@
+/* =============================================================================
+   Reese Tan Design System — Option B: "Evolve to 2026"
+   Editorial cream School B. Same warm brand DNA, but the system is rebuilt
+   for confidence, restraint, and bilingual craft.
+
+   Key moves vs Option A:
+   - Coral desaturated to a refined terracotta (less "neon CTA", more "magazine")
+   - Sanchez → Fraunces (variable, expressive, the 2026 editorial default)
+   - Bento grid + scroll-driven kinetic type
+   - Paper-grain texture signature
+   - CJK (Noto Serif/Sans SC) is a first-class type pair, not an afterthought
+
+   Drop into a global stylesheet. OKLCH throughout. CSS-native motion.
+   Pair with: tailwind.config.cjs (same folder) for Tailwind consumers.
+   ============================================================================= */
+
+/* =============================================================================
+   @FONT-FACE — variable fonts with CJK fallback metric overrides
+   The `size-adjust` / `ascent-override` block below eliminates layout shift
+   when CJK characters render before the Noto Sans SC file finishes loading.
+   Without these overrides, CJK pages shift ~12px on font load (Tier 6 item 30).
+   ============================================================================= */
+
+/* Inter — Latin body, variable 100–900 */
+@font-face {
+  font-family: 'Inter';
+  src: url('/fonts/Inter-VF.woff2') format('woff2-variations');
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+  unicode-range: U+0020-007F, U+00A0-00FF, U+0100-017F, U+2000-206F;
+}
+/* Inter fallback metric override */
+@font-face {
+  font-family: 'Inter Fallback';
+  src: local('Arial');
+  ascent-override: 90%;
+  descent-override: 22.43%;
+  line-gap-override: 0%;
+  size-adjust: 107.4%;
+}
+
+/* Fraunces — Latin display, variable (wght, opsz, SOFT axes) */
+@font-face {
+  font-family: 'Fraunces';
+  src: url('/fonts/Fraunces-VF.woff2') format('woff2-variations');
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+  unicode-range: U+0020-007F, U+00A0-00FF;
+}
+
+/* Noto Sans SC — CJK body, metric override matches Inter */
+@font-face {
+  font-family: 'Noto Sans SC';
+  src: url('/fonts/NotoSansSC-VF.woff2') format('woff2-variations');
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+  unicode-range: U+4E00-9FFF, U+3000-303F, U+FF00-FFEF;
+}
+@font-face {
+  font-family: 'Noto Sans SC Fallback';
+  src: local('PingFang SC'), local('Microsoft YaHei');
+  ascent-override: 90%;
+  descent-override: 22.43%;
+  line-gap-override: 0%;
+  size-adjust: 107.4%;
+}
+
+/* Noto Serif SC — CJK display */
+@font-face {
+  font-family: 'Noto Serif SC';
+  src: url('/fonts/NotoSerifSC-VF.woff2') format('woff2-variations');
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+  unicode-range: U+4E00-9FFF, U+3000-303F, U+FF00-FFEF;
+}
+
+/* JetBrains Mono — Latin mono, variable */
+@font-face {
+  font-family: 'JetBrains Mono';
+  src: url('/fonts/JetBrainsMono-VF.woff2') format('woff2-variations');
+  font-weight: 100 800;
+  font-style: normal;
+  font-display: swap;
+  unicode-range: U+0020-007F, U+00A0-00FF;
+}
+
+:root {
+  /* =========================================================================
+     COLOR — PRIMITIVES
+     Brand hue is a refined terracotta (h ≈ 35). Lower chroma than Option A's
+     coral — reads as "ink-red" not "neon-orange".
+     Neutrals are even more paper-warm (h ≈ 85) so the page feels like a
+     magazine spread, not a screen.
+     ========================================================================= */
+
+  /* Terracotta ramp */
+  --terracotta-50:  oklch(97% 0.012 35);
+  --terracotta-100: oklch(94% 0.025 35);
+  --terracotta-200: oklch(88% 0.05 35);
+  --terracotta-300: oklch(80% 0.08 35);
+  --terracotta-400: oklch(72% 0.11 35);
+  --terracotta-500: oklch(62% 0.14 35);   /* signature accent — under 10% of any view */
+  --terracotta-600: oklch(52% 0.13 35);
+  --terracotta-700: oklch(42% 0.11 35);
+  --terracotta-800: oklch(32% 0.085 35);
+  --terracotta-900: oklch(24% 0.06 35);
+
+  /* Warm paper neutral ramp — fewer steps, less grey */
+  --paper-1:  oklch(98.5% 0.012 85);   /* page base, "cream" */
+  --paper-2:  oklch(96% 0.014 85);     /* elevated surface */
+  --paper-3:  oklch(93% 0.014 85);     /* hover, subtle fill */
+  --paper-4:  oklch(88% 0.012 85);     /* divider strong */
+  --paper-5:  oklch(78% 0.010 85);
+  --paper-6:  oklch(62% 0.010 85);     /* muted text */
+  --paper-7:  oklch(48% 0.010 85);
+  --paper-8:  oklch(32% 0.010 85);     /* primary text on light */
+  --paper-9:  oklch(22% 0.012 50);     /* display ink — slightly warm-toward-red */
+  --paper-10: oklch(14% 0.012 50);     /* deep ink */
+
+  /* Status (sophisticated, not garish) */
+  --success:  oklch(55% 0.12 150);
+  --warning:  oklch(72% 0.13 75);
+  --info:     oklch(55% 0.10 230);
+
+  /* =========================================================================
+     COLOR — SEMANTIC (LIGHT MODE)
+     The signature accent is restrained. Pages should be 90%+ paper + ink.
+     ========================================================================= */
+
+  --background:           var(--paper-1);
+  --foreground:           var(--paper-9);
+  --card:                 var(--paper-2);
+  --card-foreground:      var(--paper-9);
+  --popover:              oklch(100% 0 0);
+  --popover-foreground:   var(--paper-9);
+
+  --primary:              var(--terracotta-500);          /* restrained terracotta */
+  --primary-foreground:   oklch(99% 0 0);
+  --accent:               var(--terracotta-100);
+  --accent-foreground:    var(--terracotta-800);
+
+  --secondary:            var(--paper-3);
+  --secondary-foreground: var(--paper-9);
+  --muted:                var(--paper-3);
+  --muted-foreground:     var(--paper-6);
+
+  --destructive:          var(--terracotta-700);
+  --destructive-foreground: oklch(99% 0 0);
+  --success:              var(--success);
+  --success-foreground:   oklch(99% 0 0);
+  --warning:              var(--warning);
+  --warning-foreground:   var(--paper-10);
+  --info:                 var(--info);
+  --info-foreground:      oklch(99% 0 0);
+
+  --border:               var(--paper-4);
+  --input:                var(--paper-5);
+  --ring:                 var(--terracotta-500);
+
+  /* =========================================================================
+     TYPOGRAPHY
+     Latin:  Fraunces (variable display) + Inter (body) + JetBrains Mono
+     CJK:    Noto Serif SC (display) + Noto Sans SC (body) — same axis pairing
+     All four are free on Google Fonts. The CJK pair is what every top-tier
+     bilingual 2026 site uses.
+     ========================================================================= */
+
+  --font-display: "Fraunces", "Noto Serif SC", "Source Han Serif SC",
+                  "Songti SC", "SimSun", serif;
+  --font-sans:    "Inter", "Inter Display", "Noto Sans SC",
+                  "PingFang SC", "Microsoft YaHei",
+                  -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --font-mono:    "JetBrains Mono Variable", "JetBrains Mono",
+                  ui-monospace, SFMono-Regular, Menlo, monospace;
+
+  /* Type scale — modular 1.25, same as A so devs don't relearn anything.
+     The fluid H1 is the 2026 non-negotiable. */
+  --text-xs:   0.75rem;
+  --text-sm:   0.875rem;
+  --text-base: 1rem;
+  --text-lg:   1.125rem;
+  --text-xl:   1.25rem;
+  --text-2xl:  1.563rem;
+  --text-3xl:  1.953rem;
+  --text-4xl:  2.441rem;
+  --text-5xl:  3.052rem;
+  --text-6xl:  3.815rem;
+  --text-7xl:  4.768rem;
+  --text-8xl:  5.96rem;       /* display — Fraunces can carry this with grace */
+
+  --leading-display: 1.0;     /* tighter than A; Fraunces is calibrated for it */
+  --leading-snug:    1.2;
+  --leading-normal:  1.55;    /* Latin body */
+  --leading-relaxed: 1.75;    /* CJK body */
+  --leading-loose:   1.85;
+
+  --tracking-display: -0.035em;  /* Fraunces at large size likes more pull */
+  --tracking-body:     0;
+  --tracking-caps:     0.05em;   /* slightly tighter than A — fewer all-caps moments */
+
+  /* =========================================================================
+     SPACING (4 / 8 base, same scale as A for shared mental model)
+     ========================================================================= */
+  --space-0:  0;
+  --space-1:  0.25rem;
+  --space-2:  0.5rem;
+  --space-3:  0.75rem;
+  --space-4:  1rem;
+  --space-5:  1.5rem;
+  --space-6:  2rem;
+  --space-7:  3rem;
+  --space-8:  4rem;
+  --space-9:  6rem;
+  --space-10: 8rem;
+  --space-11: 12rem;            /* only for hero whitespace on desktop */
+
+  /* =========================================================================
+     RADII — tighter than A. Editorial sites use less rounding.
+     ========================================================================= */
+  --radius-sm:   0.25rem;       /* 4 — chips */
+  --radius-md:   0.5rem;        /* 8 — inputs, small buttons */
+  --radius-lg:   0.75rem;       /* 12 — small cards */
+  --radius-xl:   1rem;          /* 16 — section cards */
+  --radius-2xl:  1.25rem;       /* 20 — large cards */
+  --radius-3xl:  1.75rem;       /* 28 — hero portrait */
+  --radius-full: 9999px;
+
+  /* =========================================================================
+     SHADOWS — lighter than A. The page is paper-flat; shadows are rare.
+     ========================================================================= */
+  --shadow-xs: 0 1px 1px 0 oklch(20% 0.02 60 / 0.04);
+  --shadow-sm: 0 2px 4px -1px oklch(20% 0.02 60 / 0.05);
+  --shadow-md: 0 6px 16px -8px oklch(20% 0.02 60 / 0.08);
+  --shadow-lg: 0 16px 36px -12px oklch(20% 0.02 60 / 0.10);
+
+  /* =========================================================================
+     PAPER GRAIN (the signature texture for Option B)
+     Applied as a low-opacity SVG noise overlay on body. Subtle — never loud.
+     ========================================================================= */
+  --grain-opacity: 0.025;
+
+  /* =========================================================================
+     MOTION (CSS-native first)
+     ========================================================================= */
+  --duration-instant:   50ms;
+  --duration-fast:      150ms;
+  --duration-base:      250ms;
+  --duration-medium:    400ms;        /* slightly more deliberate than A */
+  --duration-slow:      600ms;
+  --duration-deliberate: 900ms;       /* signature: kinetic Fraunces weight shift */
+
+  --ease-out:    cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in:     cubic-bezier(0.4, 0, 1, 1);
+  --ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+
+  /* =========================================================================
+     Z-INDEX
+     ========================================================================= */
+  --z-base:    0;
+  --z-raised:  10;
+  --z-sticky:  100;
+  --z-overlay: 500;
+  --z-modal:   1000;
+  --z-toast:   1500;
+
+  /* =========================================================================
+     LAYOUT — BENTO GRID TOKENS
+     The 12-col grid that powers Option B's feature section.
+     ========================================================================= */
+  --container-sm:  640px;
+  --container-md:  768px;
+  --container-lg:  1024px;
+  --container-xl:  1200px;
+  --container-2xl: 1320px;
+  --container-prose: 65ch;     /* EN */
+  --container-prose-cjk: 38ch; /* CJK — narrower for character density */
+
+  --header-height: 72px;
+  --bento-gap:     var(--space-5);
+  --bento-radius:  var(--radius-2xl);
+}
+
+/* =============================================================================
+   DARK MODE — proper surface ladder, not a hex invert.
+   4 luminance steps so cards nest visually.
+   ============================================================================= */
+[data-theme="dark"],
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --background:           oklch(14% 0.012 60);
+    --foreground:           oklch(95% 0.008 85);
+    --card:                 oklch(18% 0.012 60);
+    --card-foreground:      oklch(95% 0.008 85);
+    --popover:              oklch(20% 0.012 60);
+    --popover-foreground:   oklch(95% 0.008 85);
+
+    --primary:              oklch(68% 0.13 35);   /* lighter terracotta for dark */
+    --primary-foreground:   oklch(14% 0.012 60);
+    --accent:               oklch(28% 0.07 35);
+    --accent-foreground:    oklch(92% 0.02 35);
+
+    --secondary:            oklch(22% 0.012 60);
+    --secondary-foreground: oklch(95% 0.008 85);
+    --muted:                oklch(22% 0.012 60);
+    --muted-foreground:     oklch(65% 0.010 85);
+
+    --destructive:          oklch(62% 0.18 25);
+    --destructive-foreground: oklch(14% 0.012 60);
+    --success:              oklch(68% 0.13 150);
+    --warning:              oklch(76% 0.13 75);
+    --info:                 oklch(68% 0.10 230);
+
+    --border:               oklch(28% 0.012 60);
+    --input:                oklch(28% 0.012 60);
+    --ring:                 oklch(68% 0.13 35);
+  }
+}
+
+/* =============================================================================
+   KINETIC TYPE (the signature motion for Option B)
+   Variable Fraunces shifts weight on scroll. Honors reduced-motion.
+
+   FALLBACK RULE (post-assessment #8): if the page is shorter than ~3
+   viewports, the weight shift barely registers. Use `.kinetic-fraunces--static`
+   on short pages — it locks Fraunces at wght 700 (visually equivalent to the
+   end-state of the kinetic version) so the headline still lands with weight
+   even without the scroll animation.
+   ============================================================================= */
+.kinetic-fraunces,
+.kinetic-fraunces--static {
+  font-family: var(--font-display);
+  font-variation-settings: "wght" 400, "opsz" 144, "SOFT" 50;
+}
+
+.kinetic-fraunces {
+  animation: fraunces-pulse var(--duration-deliberate) var(--ease-out) both;
+  animation-timeline: view();
+  animation-range: cover 0% cover 80%;
+}
+
+.kinetic-fraunces--static {
+  /* Locked at the visual end-state for short pages */
+  font-variation-settings: "wght" 700, "opsz" 144, "SOFT" 30;
+}
+
+@keyframes fraunces-pulse {
+  from { font-variation-settings: "wght" 400, "opsz" 144, "SOFT" 50; }
+  to   { font-variation-settings: "wght" 900, "opsz" 144, "SOFT" 50; }
+}
+
+/* =============================================================================
+   PAPER GRAIN OVERLAY
+   Apply to <body> or hero sections. SVG noise as data URI.
+
+   RETINA + DARK MODE (post-assessment #9): the default `.grain` is tuned for
+   standard-density, light-mode displays. On retina screens the noise can
+   disappear entirely, and on dark mode `mix-blend-mode: multiply` over-darks
+   the page. Use the modifier classes to handle these cases.
+   ============================================================================= */
+.grain::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: var(--z-toast);
+  opacity: var(--grain-opacity);
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/><feColorMatrix values='0 0 0 0 0.1  0 0 0 0 0.05  0 0 0 0 0.02  0 0 0 0.4 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+  mix-blend-mode: multiply;
+  background-size: 200px 200px;
+}
+
+/* Retina: 2× the base frequency so the noise survives the pixel density bump */
+.grain--retina::after {
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='400' height='400'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='1.8' numOctaves='2'/><feColorMatrix values='0 0 0 0 0.1  0 0 0 0 0.05  0 0 0 0 0.02  0 0 0 0.4 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+  background-size: 400px 400px;
+}
+
+/* Dark mode: switch to screen blend so the grain LIFTS the page, not crushes it */
+[data-theme="dark"] .grain::after,
+[data-theme="dark"] .grain--retina::after {
+  mix-blend-mode: screen;
+  opacity: 0.04;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/><feColorMatrix values='0 0 0 0 0.9  0 0 0 0 0.85  0 0 0 0 0.8  0 0 0 0.4 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+}
+
+/* =============================================================================
+   HERO CTA PATTERN (the 2026 risk-reducer fix)
+   Post-audit Tier 1 #4: every primary CTA needs a risk reducer below it.
+   This pattern pairs the Button with a small "free / no-commitment" line.
+
+   Usage:
+     <div class="hero-cta">
+       <a class="btn btn--primary">Book a Consultation</a>
+       <p class="hero-cta__reducer">Free 15-min WhatsApp call · No commitment · Mon–Fri 9–6 MYT</p>
+     </div>
+   ============================================================================= */
+.hero-cta {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-2);
+}
+.hero-cta__reducer {
+  margin: 0;
+  font-size: var(--text-sm);
+  color: var(--muted-foreground);
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+.hero-cta__reducer::before {
+  content: "";
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  border-radius: 999px;
+  background: var(--success);
+  flex-shrink: 0;
+}
+
+/* =============================================================================
+   TESTIMONIAL CARD (post-audit Tier 4 #17 — strengthened spec)
+   Order: photo → quantified outcome first → quote → attribution.
+   Photo is 56px circular. Outcome uses font-mono for the number to feel like
+   data, not decoration.
+   ============================================================================= */
+.testimonial {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-2xl);
+  padding: var(--space-6);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+.testimonial__outcome {
+  font-family: var(--font-mono);
+  font-size: var(--text-lg);
+  font-weight: 600;
+  color: var(--primary);
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-2);
+}
+.testimonial__quote {
+  font-family: var(--font-display);
+  font-size: var(--text-xl);
+  line-height: 1.4;
+  color: var(--foreground);
+  font-variation-settings: "opsz" 36, "wght" 400;
+  margin: 0;
+  font-style: italic;
+}
+.testimonial__attribution {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  margin-top: auto;
+  padding-top: var(--space-4);
+  border-top: 1px solid var(--border);
+}
+.testimonial__photo {
+  width: 48px;
+  height: 48px;
+  border-radius: 999px;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+.testimonial__name {
+  font-weight: 600;
+  font-size: var(--text-sm);
+  color: var(--foreground);
+}
+.testimonial__role {
+  font-size: var(--text-xs);
+  color: var(--muted-foreground);
+}
+
+/* =============================================================================
+   BENTO HERO CELL (post-audit fix)
+   The hero cell of the bento grid needs the H3 to be larger so the visual
+   hierarchy is obvious — flagship service = biggest card = biggest type.
+   ============================================================================= */
+.bento__cell--hero h3 {
+  font-size: clamp(1.75rem, 2.5vw + 0.5rem, 2.5rem) !important;
+  line-height: 1.1;
+}
+
+/* =============================================================================
+   ACCESSIBILITY
+   ============================================================================= */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  .kinetic-fraunces {
+    animation: none;
+    font-variation-settings: "wght" 700, "opsz" 144, "SOFT" 30;
+  }
+}
+
+@media (forced-colors: active) {
+  :root {
+    --border: CanvasText;
+    --ring:   Highlight;
+  }
+}

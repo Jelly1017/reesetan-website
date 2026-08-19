@@ -1,0 +1,51 @@
+---
+// src/pages/index.astro
+// The new landing page — all 8 sections + booking + contact form + structured data.
+
+import Base from '../layouts/Base.astro';
+import Hero from '../components/sections/Hero.astro';
+import About from '../components/sections/About.astro';
+import Services from '../components/sections/Services.astro';
+import Training from '../components/sections/Training.astro';
+import PastTraining from '../components/sections/PastTraining.astro';
+import FAQ from '../components/sections/FAQ.astro';
+import Contact from '../components/sections/Contact.astro';
+import { personSchema, courseSchema, faqSchema, breadcrumbSchema, videoSchema } from '../lib/seo';
+
+const en = 'en';
+const enFAQs = [
+  { q: 'Who is Reese Tan?', a: 'Reese Tan is a HRDC-accredited AI Trainer and Digital Marketing Strategist based in Malaysia.' },
+  { q: 'Is the training HRD Corp claimable?', a: 'Yes. Reese Tan is an HRDC Accredited Trainer and her programme is HRD Corp Claimable.' },
+  { q: 'What will participants walk away with?', a: '5 tangible deliverables: prompt templates, personal AI assistant, Canva template, Gamma deck, and a 5-task action plan.' },
+  { q: 'Is the training approved by LPPEH for CPD hours?', a: 'Yes. 5 CPD Hours.' },
+  { q: 'How long is the training?', a: '5 hours, from 9:30am to 3:45pm. 100% hands-on.' },
+  { q: 'Can Reese conduct in-house corporate training?', a: 'Yes, minimum 10 participants, at your office or our training centre.' },
+  { q: 'What AI tools does Reese teach?', a: 'Gemini, NotebookLM, Canva AI, AI Agents, Gamma, and more — all free tools.' },
+  { q: 'Where is the training conducted?', a: 'Hartamas Training Centre, Petaling Jaya, or in-house at your office.' },
+  { q: 'How is Reese different from other AI trainers?', a: 'Reese is a full-time marketer who uses AI daily — practical, not theoretical.' },
+  { q: 'Is the training suitable for non-technical staff?', a: 'Yes. No IT background required.' },
+];
+---
+
+<Base
+  title="Reese Tan"
+  description="Reese Tan is a HRDC-accredited AI Trainer and full-time Digital Marketing Strategist. Helping SME owners and corporate teams replace manual tasks with AI — so they can do more in less time. HRD Corp Claimable. LPPEH 5 CPD Hours. Based in Malaysia."
+  path="/"
+  jsonLd={[
+    personSchema(),
+    courseSchema(),
+    videoSchema(),
+    faqSchema(enFAQs),
+    breadcrumbSchema([
+      { name: 'Home', url: 'https://reesetan.com/' },
+    ]),
+  ]}
+>
+  <Hero locale={en} />
+  <About locale={en} />
+  <Services locale={en} />
+  <Training locale={en} />
+  <PastTraining locale={en} />
+  <FAQ locale={en} />
+  <Contact locale={en} />
+</Base>

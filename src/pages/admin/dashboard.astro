@@ -1,0 +1,63 @@
+---
+// src/pages/admin/dashboard.astro
+// Server-rendered admin dashboard. Lists all leads, filterable by status.
+// Uses SSR (output: 'server') so we can check auth before rendering.
+
+import Base from '../../layouts/Base.astro';
+import AdminDashboard from '../../components/crm/AdminDashboard.tsx';
+import { createServerSupabase, supabaseConfigured } from '../../lib/supabase';
+import type { Lead } from '../../lib/validation';
+
+let leads: Lead[] = [];
+let adminEmail = '';
+let setupNeeded = !supabaseConfigured();
+let isAuthed = false;
+
+if (!setupNeeded) {
+  const supabase = createServerSupabase(Astro.cookies);
+  const { data: { session } } = await supabase.auth.getSession();
+
+  if (!session) {
+    return Astro.redirect('/admin');
+  }
+
+  adminEmail = session.user.email || '';
+  isAuthed = true;
+
+  // Fetch leads
+  const { data, error } = await supabase
+    .from('leads')
+    .select('*')
+    .order('created_at', { ascending: false })
+    .limit(500);
+
+  if (error) {
+    console.error('[admin] Failed to fetch leads:', error);
+  } else {
+    leads = (data || []) as Lead[];
+  }
+}
+---
+
+<Base
+  title="Admin Dashboard"
+  description="Manage leads, bookings, and inquiries."
+  path="/admin/dashboard"
+  hideNav={true}
+  hideFooter={true}
+  hideWhatsApp={true}
+>
+  {setupNeeded ? (
+    <div style="min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 24px;">
+      <div class="card" style="max-width: 500px; text-align: center;">
+        <h2>Setup needed</h2>
+        <p style="color: var(--muted-foreground);">
+          Configure your Supabase keys in <code>.env</code> and run the SQL schema in <code>src/lib/db/schema.sql</code>.
+        </p>
+        <a href="/" class="btn btn--secondary" style="margin-top: 16px;">Back to site</a>
+      </div>
+    </div>
+  ) : (
+    <AdminDashboard client:load initialLeads={leads} adminEmail={adminEmail} />
+  )}
+</Base>

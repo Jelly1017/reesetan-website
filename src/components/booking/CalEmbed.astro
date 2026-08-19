@@ -1,0 +1,114 @@
+---
+// src/components/booking/CalEmbed.astro
+// Embeds Cal.com inline. Configure PUBLIC_CAL_COM_LINK in .env to your Cal.com
+// event-type link, e.g. "reesetan/15min" — that's all that's needed.
+//
+// The embed auto-loads Cal.com's official embed script. If PUBLIC_CAL_COM_LINK
+// is not set, falls back to a "Book via Cal.com" CTA that opens the link in
+// a new tab (graceful degradation).
+
+export interface Props {
+  /** Cal.com event-type slug, e.g. "reesetan/15min" or "reesetan/discovery-call" */
+  calLink?: string;
+  /** Layout: "inline" (full) or "compact" (small, modal-style) */
+  layout?: 'inline' | 'compact';
+  /** Pre-fill name and email if known */
+  prefill?: { name?: string; email?: string };
+}
+
+const {
+  calLink = import.meta.env.PUBLIC_CAL_COM_LINK,
+  layout = 'inline',
+  prefill,
+} = Astro.props;
+
+const hasCal = Boolean(calLink);
+---
+
+{hasCal ? (
+  <div
+    class="cal-embed"
+    data-cal-link={calLink}
+    data-cal-layout={layout}
+    data-cal-namespace="reesetan-booking"
+    style="width: 100%; min-height: 600px; overflow: auto; border-radius: var(--radius-xl); border: 1px solid var(--border); background: white;"
+  >
+    <!-- Cal.com inline embed will render here -->
+  </div>
+
+  <script is:inline>
+    (function() {
+      // Pre-fill if we have it
+      if (window.Cal && window.Cal.ns && window.Cal.ns['reesetan-booking']) {
+        // Already loaded
+        return;
+      }
+
+      // Initialize Cal.com queue
+      (function(C, A, L) {
+        let p = function(a, ar) { a.q.push(ar); };
+        let d = C.document;
+        C.Cal = C.Cal || function() {
+          let cal = C.Cal;
+          let ar = arguments;
+          if (!cal.loaded) {
+            cal.ns = {};
+            cal.q = cal.q || [];
+            d.head.appendChild(d.createElement("script")).src = A;
+            cal.loaded = true;
+          }
+          if (ar[0] === L) {
+            const api = function() { p(api, arguments); };
+            const namespace = ar[1];
+            api.q = api.q || [];
+            if (typeof namespace === "string") {
+              cal.ns[namespace] = cal.ns[namespace] || api;
+              p(cal.ns[namespace], ar);
+              p(cal, ["initNamespace", namespace]);
+            } else p(cal, ar);
+            return;
+          }
+          p(cal, ar);
+        };
+      })(window, "https://app.cal.com/embed/embed.js", "init");
+
+      window.Cal("init", "reesetan-booking", { origin: "https://cal.com" });
+
+      // Prefill if name/email is known (e.g. coming from a logged-in user)
+      const prefill = document.querySelector('.cal-embed')?.getAttribute('data-prefill');
+      if (prefill) {
+        try {
+          const data = JSON.parse(prefill);
+          window.Cal.ns["reesetan-booking"]("ui", {
+            theme: "light",
+            cssVarsPerTheme: {
+              light: { "cal-brand": "#c84a1a" },
+              dark: { "cal-brand": "#d96b3d" },
+            },
+            hideEventTypeDetails: false,
+            layout: document.querySelector('.cal-embed')?.getAttribute('data-cal-layout') || 'month_view',
+          });
+        } catch (e) {}
+      }
+
+      const link = document.querySelector('.cal-embed')?.getAttribute('data-cal-link');
+      if (link) {
+        window.Cal.ns["reesetan-booking"]("inline", {
+          elementOrSelector: ".cal-embed",
+          config: { layout: document.querySelector('.cal-embed')?.getAttribute('data-cal-layout') || 'month_view' },
+          calLink: link,
+        });
+      }
+    })();
+  </script>
+) : (
+  <!-- Fallback: CTA to set up Cal.com -->
+  <div style="padding: 32px; text-align: center; border: 1px dashed var(--border); border-radius: var(--radius-xl); background: var(--card);">
+    <p style="font-size: 14px; color: var(--muted-foreground); margin: 0 0 16px;">
+      📅 {Astro.props.calLink ? 'Loading calendar…' : 'Calendar not configured yet. Add PUBLIC_CAL_COM_LINK to your .env file.'}
+    </p>
+    <a href="https://cal.com/" target="_blank" rel="noopener" class="btn btn--secondary">
+      Set up Cal.com
+    </a>
+  </div>
+)}

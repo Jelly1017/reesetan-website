@@ -1,0 +1,42 @@
+# Reese Tan — llms.txt
+# Per the llms.txt spec (llmstxt.org). Helps AI search engines understand the site.
+
+# Reese Tan
+> HRDC-accredited AI Trainer and Digital Marketing Strategist based in Malaysia.
+> Helps SME owners, corporate teams, and property professionals replace manual tasks with AI tools.
+> Services: SME/Corporate Training, Hourly Consultation, Digital Marketing Strategy Review.
+> Flagship programme: "Mastering AI: Smart Prompts, Sharp Writing, Solid Research" — 5 hours, hands-on, HRD Corp Claimable, LPPEH 5 CPD Hours.
+
+## Services
+- [SME & Corporate Training](/#services) — Custom AI workshops for teams of 10+. HRD Corp Claimable.
+- [Hourly Consultation](/#services) — Focused deep-dive on AI workflow, productivity, or marketing strategy.
+- [Digital Marketing Strategy Review](/#services) — Audit + actionable roadmap for current campaigns.
+
+## Training Programme
+- [Mastering AI: Smart Prompts, Sharp Writing, Solid Research](/#training) — 5-hour hands-on workshop. 6 modules covering Gemini, NotebookLM, Canva AI, AI Agents, and Gamma. 5 deliverables: prompt templates, personal AI assistant, Canva template, Gamma deck, 5-task action plan.
+
+## Audience
+- SME owners & business founders
+- HR & training managers
+- Marketing & sales professionals
+- Real estate professionals (LPPEH 5 CPD Hours)
+- Corporate teams & departments
+
+## Credentials
+- HRDC Accredited Trainer
+- HRD Corp Claimable
+- LPPEH 5 CPD Hours
+- 500+ professionals trained
+
+## Contact
+- WhatsApp: https://wa.me/60163356790
+- Email: hello@reesetan.com
+- Address: Level 13, Block A, Menara Prima, Jalan PJU 1/37, Dataran Prima, 47301 Petaling Jaya, Selangor, Malaysia
+- Hours: Mon–Fri 9:00–18:00 MYT
+
+## Booking
+- Free 15-minute consultation: [cal.com](/#booking) (configure PUBLIC_CAL_COM_LINK to enable)
+
+## Optional
+- [Privacy](/legal/privacy)
+- [Terms](/legal/terms)

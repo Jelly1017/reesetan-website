@@ -1,0 +1,94 @@
+/* =============================================================================
+   REESE TAN — FONT LOADING (Option B)
+   Self-hosted variable fonts with CJK metric overrides so the layout
+   never shifts on font load.
+
+   Drop the .woff2 files into /public/fonts/ before deploying:
+     InterVariable.woff2           — variable, 100-900
+     Fraunces-VF.woff2             — variable, wght + opsz + SOFT axes
+     JetBrainsMono-VF.woff2        — variable
+     NotoSansSC-VF.woff2           — CJK body (subset)
+     NotoSerifSC-VF.woff2          — CJK display (subset)
+
+   Source: Google Fonts (free). Inter is OFL, Fraunces is OFL, Noto is OFL,
+   JetBrains Mono is OFL.
+   ============================================================================= */
+
+/* ----- Inter — Latin body, variable 100-900 ----- */
+@font-face {
+  font-family: 'Inter';
+  src: url('/fonts/InterVariable.woff2') format('woff2-variations');
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+  unicode-range: U+0020-007F, U+00A0-00FF, U+0100-017F, U+2000-206F;
+}
+
+/* Inter fallback metric override (matches Inter metrics) */
+@font-face {
+  font-family: 'Inter Fallback';
+  src: local('Arial');
+  ascent-override: 90%;
+  descent-override: 22.43%;
+  line-gap-override: 0%;
+  size-adjust: 107.4%;
+}
+
+/* ----- Fraunces — Latin display, variable (wght, opsz, SOFT axes) ----- */
+@font-face {
+  font-family: 'Fraunces';
+  src: url('/fonts/Fraunces-VF.woff2') format('woff2-variations');
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+  unicode-range: U+0020-007F, U+00A0-00FF, U+0100-017F, U+2000-206F;
+}
+
+/* ----- Noto Sans SC — CJK body, metric override matches Inter ----- */
+@font-face {
+  font-family: 'Noto Sans SC';
+  src: url('/fonts/NotoSansSC-VF.woff2') format('woff2-variations');
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+  unicode-range: U+4E00-9FFF, U+3400-4DBF, U+2E80-2EFF, U+3000-303F, U+FF00-FFEF;
+}
+
+/* Noto Sans SC fallback metric override (so the layout doesn't shift) */
+@font-face {
+  font-family: 'Noto Sans SC Fallback';
+  src: local('PingFang SC'), local('Microsoft YaHei'), local('Hiragino Sans GB');
+  ascent-override: 90%;
+  descent-override: 22.43%;
+  line-gap-override: 0%;
+  size-adjust: 107.4%;
+}
+
+/* ----- Noto Serif SC — CJK display ----- */
+@font-face {
+  font-family: 'Noto Serif SC';
+  src: url('/fonts/NotoSerifSC-VF.woff2') format('woff2-variations');
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+  unicode-range: U+4E00-9FFF, U+3400-4DBF, U+2E80-2EFF, U+3000-303F, U+FF00-FFEF;
+}
+
+/* ----- JetBrains Mono — Latin mono, variable ----- */
+@font-face {
+  font-family: 'JetBrains Mono Variable';
+  src: url('/fonts/JetBrainsMono-VF.woff2') format('woff2-variations');
+  font-weight: 100 800;
+  font-style: normal;
+  font-display: swap;
+  unicode-range: U+0020-007F, U+00A0-00FF, U+2000-206F;
+}
+
+/* ----- Font family stacks exposed as CSS variables ----- */
+:root {
+  --font-sans: 'Inter', 'Inter Fallback', 'Noto Sans SC', 'Noto Sans SC Fallback',
+               'PingFang SC', 'Microsoft YaHei', system-ui, sans-serif;
+  --font-display: 'Fraunces', 'Noto Serif SC', 'Source Han Serif SC',
+                  'Songti SC', 'SimSun', serif;
+  --font-mono: 'JetBrains Mono Variable', 'JetBrains Mono', ui-monospace, monospace;
+}

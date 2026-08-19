@@ -1,0 +1,81 @@
+---
+// src/components/sections/Services.astro
+// Option B signature: BENTO GRID for services (12-col, 1 hero cell + 2 small).
+export interface Props { locale: 'en' | 'zh'; }
+const { locale } = Astro.props;
+const isZh = locale === 'zh';
+---
+
+<section class="section section--alt" id="services">
+  <div class="container-2xl">
+    <div style="text-align: center; max-width: 600px; margin: 0 auto 48px;">
+      <span class="badge badge--outlined" style="margin-bottom: 12px;">{isZh ? '服务' : 'Services'}</span>
+      <h2 style="margin: 0 0 12px;">
+        {isZh ? '三种方式与您合作' : 'Three ways to work with you'}
+      </h2>
+      <p style="color: var(--muted-foreground);">
+        {isZh
+          ? '从企业培训到一对一咨询,挑最适合您团队的方式。'
+          : 'From corporate training to 1-on-1 strategy sessions, pick the format that fits your team.'}
+      </p>
+    </div>
+
+    <div class="bento">
+      <!-- HERO CELL: SME & Corporate Training -->
+      <article class="bento__hero card" style="background: var(--primary); color: var(--primary-foreground); border: none; padding: 48px; display: flex; flex-direction: column; justify-content: space-between; min-height: 360px;">
+        <div>
+          <div style="font-family: var(--font-mono); font-size: 14px; opacity: 0.7; margin-bottom: 16px;">01</div>
+          <h3 style="color: var(--primary-foreground); margin: 0 0 16px; font-size: clamp(1.75rem, 2.5vw + 1rem, 2.5rem);">
+            {isZh ? '中小企业 & 企业培训' : 'SME & Corporate Training'}
+          </h3>
+          <p style="color: var(--primary-foreground); opacity: 0.9; max-width: 50ch; margin: 0 0 24px; font-size: 1.0625rem;">
+            {isZh
+              ? '为 SME 和企业团队定制 AI 工作坊 — HRD Corp 可报销,HRDC 认证,LPPEH 批准。'
+              : 'Custom AI workshops for SME and corporate teams — HRD Corp Claimable, HRDC Accredited, LPPEH Approved.'}
+          </p>
+          <div style="display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 24px;">
+            <span class="badge" style="background: oklch(99% 0 0 / 0.15); color: var(--primary-foreground); border: 1px solid oklch(99% 0 0 / 0.3);">{isZh ? '10 人起' : 'Min 10 pax'}</span>
+            <span class="badge" style="background: oklch(99% 0 0 / 0.15); color: var(--primary-foreground); border: 1px solid oklch(99% 0 0 / 0.3);">{isZh ? '半天 / 全天' : 'Half / Full day'}</span>
+            <span class="badge" style="background: oklch(99% 0 0 / 0.15); color: var(--primary-foreground); border: 1px solid oklch(99% 0 0 / 0.3);">EN / 中文</span>
+          </div>
+        </div>
+        <a href="#training" class="btn" style="background: white; color: var(--primary); align-self: flex-start;">
+          {isZh ? '了解课程' : 'Explore Training'}
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+      </article>
+
+      <!-- SMALL CELL 1: Hourly Consultation -->
+      <article class="bento__small card" style="display: flex; flex-direction: column; justify-content: space-between; min-height: 170px;">
+        <div>
+          <div style="font-family: var(--font-mono); font-size: 12px; color: var(--muted-foreground); margin-bottom: 8px;">02</div>
+          <h3 style="margin: 0 0 8px; font-size: 1.25rem;">{isZh ? '小时咨询' : 'By the Hour'}</h3>
+          <p style="color: var(--muted-foreground); font-size: 14px; margin: 0; line-height: 1.5;">
+            {isZh
+              ? '针对您的 AI 工作流、团队效率或营销策略的深度对话。'
+              : 'A focused deep-dive on your AI workflow, team productivity gaps, or marketing strategy.'}
+          </p>
+        </div>
+        <a href="#contact" class="nav__link" style="color: var(--primary); font-size: 14px; margin-top: 12px;">
+          {isZh ? '预约 →' : 'Book →'}
+        </a>
+      </article>
+
+      <!-- SMALL CELL 2: Strategy Review -->
+      <article class="bento__small card" style="display: flex; flex-direction: column; justify-content: space-between; min-height: 170px;">
+        <div>
+          <div style="font-family: var(--font-mono); font-size: 12px; color: var(--muted-foreground); margin-bottom: 8px;">03</div>
+          <h3 style="margin: 0 0 8px; font-size: 1.25rem;">{isZh ? '数字营销策略审核' : 'Strategy Review'}</h3>
+          <p style="color: var(--muted-foreground); font-size: 14px; margin: 0; line-height: 1.5;">
+            {isZh
+              ? '审核您当前的营销活动,给出清晰的改进路线图。'
+              : 'Audit your current campaigns and get a clear, actionable roadmap to improve results.'}
+          </p>
+        </div>
+        <a href="#contact" class="nav__link" style="color: var(--primary); font-size: 14px; margin-top: 12px;">
+          {isZh ? '了解 →' : 'Learn more →'}
+        </a>
+      </article>
+    </div>
+  </div>
+</section>
