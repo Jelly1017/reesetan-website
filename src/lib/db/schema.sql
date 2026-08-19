@@ -1,10 +1,10 @@
--- =============================================================================
--- REESE TAN — CRM DATABASE SCHEMA
+﻿-- =============================================================================
+-- REESE TAN â€” CRM DATABASE SCHEMA
 -- Run this once in your Supabase SQL Editor (supabase.com/dashboard).
 -- Project: https://supabase.com/dashboard/project/_/sql
 -- =============================================================================
 
--- 1) LEADS — every form submission lands here
+-- 1) LEADS â€” every form submission lands here
 create table if not exists public.leads (
   id uuid primary key default gen_random_uuid(),
   created_at timestamptz not null default now(),
@@ -34,7 +34,7 @@ create table if not exists public.leads (
 create index if not exists leads_status_idx on public.leads (status, created_at desc);
 create index if not exists leads_email_idx on public.leads (email);
 
--- 2) BOOKINGS — synced from Cal.com webhook
+-- 2) BOOKINGS â€” synced from Cal.com webhook
 create table if not exists public.bookings (
   id uuid primary key default gen_random_uuid(),
   created_at timestamptz not null default now(),
@@ -51,7 +51,7 @@ create table if not exists public.bookings (
 create index if not exists bookings_email_idx on public.bookings (attendee_email);
 create index if not exists bookings_start_idx on public.bookings (start_time);
 
--- 3) AUDIT LOG — every admin action is recorded
+-- 3) AUDIT LOG â€” every admin action is recorded
 create table if not exists public.audit_log (
   id uuid primary key default gen_random_uuid(),
   created_at timestamptz not null default now(),
@@ -75,14 +75,14 @@ create trigger leads_set_updated_at
   for each row execute function public.set_updated_at();
 
 -- =============================================================================
--- ROW LEVEL SECURITY — only authenticated admins can read/write
+-- ROW LEVEL SECURITY â€” only authenticated admins can read/write
 -- =============================================================================
 
 alter table public.leads enable row level security;
 alter table public.bookings enable row level security;
 alter table public.audit_log enable row level security;
 
--- Allow anyone (anon) to INSERT a lead — that's the public form
+-- Allow anyone (anon) to INSERT a lead â€” that's the public form
 create policy "Anyone can submit a lead"
   on public.leads for insert
   to anon, authenticated
@@ -105,7 +105,7 @@ create policy "Admins can delete leads"
   to authenticated
   using (true);
 
--- Bookings: same — anyone can create (via webhook), only admin can read
+-- Bookings: same â€” anyone can create (via webhook), only admin can read
 create policy "Service role can insert bookings"
   on public.bookings for insert
   to service_role
@@ -136,3 +136,4 @@ create policy "Admins can view audit log"
 --   4. Confirm the email
 --   5. Then log in at /admin
 -- =============================================================================
+
