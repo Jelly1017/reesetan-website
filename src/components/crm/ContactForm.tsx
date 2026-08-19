@@ -42,18 +42,28 @@ export default function ContactForm({ locale }: Props) {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(data),
       });
-      const json = await res.json();
+
+      // Try to parse JSON, but don't fail if not JSON
+      let json: any = {};
+      try { json = await res.json(); } catch { /* ignore parse error */ }
 
       if (!res.ok || !json.ok) {
-        setErrorMsg(json.error || (isZh ? '提交失败,请重试。' : 'Submission failed. Please try again.'));
+        const detail = json.error ? ` (${json.error})` : '';
+        setErrorMsg(
+          (isZh ? '提交失败,请重试。' : 'Submission failed. Please try again.') + detail
+        );
         setStatus('error');
         return;
       }
 
       setStatus('success');
       e.currentTarget.reset();
-    } catch (err) {
-      setErrorMsg(isZh ? '网络错误,请重试。' : 'Network error. Please try again.');
+    } catch (err: any) {
+      // Show the actual error so we can debug instead of a generic message
+      const detail = err?.message || String(err);
+      setErrorMsg(
+        (isZh ? '网络错误,请重试。' : 'Network error. Please try again.') + ` (${detail})`
+      );
       setStatus('error');
     }
   }
