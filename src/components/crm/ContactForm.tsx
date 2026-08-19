@@ -24,7 +24,11 @@ export default function ContactForm({ locale }: Props) {
     setStatus('submitting');
     setErrorMsg('');
 
-    const fd = new FormData(e.currentTarget);
+    // CRITICAL: capture the form reference BEFORE await
+    // React nullifies the SyntheticEvent after the synchronous handler,
+    // so e.currentTarget becomes null after the first await.
+    const form = e.currentTarget;
+    const fd = new FormData(form);
     const data = {
       name: String(fd.get('name') || ''),
       email: String(fd.get('email') || ''),
@@ -57,7 +61,7 @@ export default function ContactForm({ locale }: Props) {
       }
 
       setStatus('success');
-      e.currentTarget.reset();
+      form.reset(); // use the captured reference, NOT e.currentTarget
     } catch (err: any) {
       // Show the actual error so we can debug instead of a generic message
       const detail = err?.message || String(err);
