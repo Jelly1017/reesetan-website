@@ -1,15 +1,27 @@
-// Build a 1200x630 OG share card using Reese's actual training photo.
+// Build a 1200x630 OG share card using Reese's training photo
+// (cropped to remove the man with a laptop in the bottom-right).
 const sharp = require('sharp');
 const fs = require('fs');
 
 const photoPath = 'public/images/training-funnel-coral.jpg';
 const W = 1200, H = 630;
-const rightW = Math.round(W * 0.58);
+const rightW = Math.round(W * 0.58);  // 696 px reserved for the photo column
 
+// Stage 1: crop the source photo to remove the man in the bottom-right.
+// Source: 1920x1440. We keep the top 80% and the left 78% so we cut
+// out the audience member with the laptop while preserving Reese (coral
+// shirt, presenting) and the screen with the lead-funnel slide.
 sharp(photoPath)
-  .resize(rightW, H, { fit: 'cover', position: 'right' })
+  .extract({
+    left: 0,
+    top: 0,
+    width: Math.round(1920 * 0.78),   // 1497 px wide — keep the Hartamas sign + Reese + screen
+    height: Math.round(1440 * 0.80),  // 1152 px tall — cut the bottom 20% (where the man is)
+  })
+  .resize(rightW, H, { fit: 'cover', position: 'right top' })
   .toBuffer({ resolveWithObject: true })
   .then(photo => {
+    // Stage 2: SVG text panel on the left
     const svg = `
       <svg width="${W}" height="${H}" xmlns="http://www.w3.org/2000/svg">
         <defs>
@@ -25,7 +37,6 @@ sharp(photoPath)
           </linearGradient>
         </defs>
 
-        <!-- Dark gradient overlay so text on the left is readable -->
         <rect width="${W}" height="${H}" fill="url(#grad)"/>
         <rect width="${W}" height="${H}" fill="url(#vgrad)"/>
 
@@ -66,6 +77,7 @@ sharp(photoPath)
       </svg>
     `;
 
+    // Stage 3: composite the photo + SVG onto a 1200x630 canvas
     return sharp({
       create: {
         width: W, height: H, channels: 4,
