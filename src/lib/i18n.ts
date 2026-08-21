@@ -24,20 +24,35 @@ export function stripLocale(pathname: string): string {
   return result === '/' ? '/' : result.replace(/\/$/, '');
 }
 
-/** Build a path for the given locale. */
+/** Build a path for the given locale.
+ *  Anchor links (`#xxx` or `/#xxx`) keep the right locale prefix and never
+ *  need a separate page. Real paths get the locale prefix on non-default locales.
+ */
 export function localizedPath(locale: Locale, path: string): string {
+  if (path.startsWith('#')) {
+    const base = locale === DEFAULT_LOCALE ? '/' : `/${locale}`;
+    return `${base}${path}`;
+  }
+  if (path.startsWith('/#')) {
+    const base = locale === DEFAULT_LOCALE ? '' : `/${locale}`;
+    return `${base}${path}`;
+  }
   const clean = path.startsWith('/') ? path : `/${path}`;
   if (locale === DEFAULT_LOCALE) return clean;
   return `/${locale}${clean === '/' ? '' : clean}`;
 }
 
-/** All site paths in order (used to build the nav + sitemap). */
+/** All site paths in order (used to build the nav + sitemap).
+ *  About/Services/Training/Gallery/Contact are anchor links to sections
+ *  on the home page (where the content actually lives). Only Insights has
+ *  its own real route.
+ */
 export const SITE_PATHS = [
-  { href: '/',          label_en: 'Home',           label_zh: '首页' },
-  { href: '/about',     label_en: 'About',          label_zh: '关于' },
-  { href: '/services',  label_en: 'Services',       label_zh: '服务' },
-  { href: '/training',  label_en: 'Training',       label_zh: '课程' },
-  { href: '/insights',  label_en: 'Insights',       label_zh: '见解' },
-  { href: '/gallery',   label_en: 'Gallery',        label_zh: '活动' },
-  { href: '/contact',   label_en: 'Contact',        label_zh: '联系' },
+  { href: '/',              label_en: 'Home',           label_zh: '首页' },
+  { href: '/#about',        label_en: 'About',          label_zh: '关于' },
+  { href: '/#services',     label_en: 'Services',       label_zh: '服务' },
+  { href: '/#training',     label_en: 'Training',       label_zh: '课程' },
+  { href: '/insights',      label_en: 'Insights',       label_zh: '见解' },
+  { href: '/#past-training',label_en: 'Gallery',        label_zh: '活动' },
+  { href: '/#contact',      label_en: 'Contact',        label_zh: '联系' },
 ] as const;

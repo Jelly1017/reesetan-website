@@ -19,7 +19,9 @@ const navItems = SITE_PATHS.filter(p => p.href !== '/').map(p => ({
 }));
 
 const otherLocale: Locale = locale === 'zh' ? 'en' : 'zh';
-const otherLocaleHref = localizedPath(otherLocale, currentPath);
+// Preserve the current section hash when switching languages.
+const currentHash = Astro.url.hash || '';
+const otherLocaleHref = localizedPath(otherLocale, currentPath) + currentHash;
 ---
 
 <header class="nav">
