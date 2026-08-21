@@ -431,6 +431,339 @@
   @media print {
     .nav, .wa-float, .footer { display: none; }
   }
+
+  /* =============================================================================
+     ARTICLE PROSE STYLES (Insights / blog articles)
+     Applied to rendered markdown inside <article class="prose">…</article>
+     Editorial / magazine feel — Fraunces headings, Inter body, terracotta accents.
+     ============================================================================= */
+
+  .prose {
+    font-family: var(--font-sans);
+    color: var(--foreground);
+    line-height: 1.75;
+    max-width: 68ch;
+  }
+  .prose > * + * { margin-top: 1.25em; }
+
+  /* Headings */
+  .prose h2 {
+    font-family: var(--font-display);
+    font-size: clamp(1.75rem, 1.5vw + 1rem, 2.25rem);
+    line-height: 1.15;
+    font-weight: 700;
+    letter-spacing: -0.025em;
+    margin-top: 2.25em;
+    margin-bottom: 0.5em;
+    color: var(--foreground);
+    scroll-margin-top: 96px;
+  }
+  .prose h3 {
+    font-family: var(--font-display);
+    font-size: clamp(1.375rem, 1vw + 0.75rem, 1.625rem);
+    line-height: 1.25;
+    font-weight: 600;
+    letter-spacing: -0.015em;
+    margin-top: 1.75em;
+    margin-bottom: 0.4em;
+    color: var(--foreground);
+    scroll-margin-top: 96px;
+  }
+  .prose h4 {
+    font-family: var(--font-sans);
+    font-size: 1.0625rem;
+    line-height: 1.4;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-top: 1.5em;
+    margin-bottom: 0.4em;
+    color: var(--muted-foreground);
+  }
+
+  /* Paragraphs */
+  .prose p {
+    font-size: 1.0625rem;
+    line-height: 1.75;
+    color: var(--foreground);
+    max-width: 68ch;
+  }
+  .prose strong { font-weight: 600; color: var(--foreground); }
+  .prose em { font-style: italic; }
+
+  /* Links */
+  .prose a {
+    color: var(--primary);
+    text-decoration: underline;
+    text-decoration-color: oklch(62% 0.14 35 / 0.35);
+    text-decoration-thickness: 1.5px;
+    text-underline-offset: 3px;
+    transition: text-decoration-color 150ms ease, color 150ms ease;
+  }
+  .prose a:hover {
+    color: var(--primary-hover);
+    text-decoration-color: var(--primary);
+  }
+
+  /* Lists */
+  .prose ul, .prose ol {
+    padding-left: 1.5em;
+    margin: 1em 0;
+  }
+  .prose ul { list-style: none; }
+  .prose ul > li {
+    position: relative;
+    padding-left: 0.25em;
+    margin: 0.4em 0;
+  }
+  .prose ul > li::before {
+    content: '';
+    position: absolute;
+    left: -1em;
+    top: 0.7em;
+    width: 6px;
+    height: 6px;
+    background: var(--primary);
+    border-radius: 50%;
+  }
+  .prose ol {
+    list-style: none;
+    counter-reset: prose-ol;
+  }
+  .prose ol > li {
+    position: relative;
+    padding-left: 2em;
+    margin: 0.5em 0;
+    counter-increment: prose-ol;
+  }
+  .prose ol > li::before {
+    content: counter(prose-ol);
+    position: absolute;
+    left: 0;
+    top: 0;
+    font-family: var(--font-mono);
+    font-size: 0.85em;
+    font-weight: 600;
+    color: var(--primary);
+    width: 1.5em;
+    text-align: right;
+  }
+  .prose li > p { margin: 0.25em 0; }
+
+  /* Blockquote — used as callout box for "Key Takeaways" */
+  .prose blockquote {
+    margin: 1.5em 0;
+    padding: 1.5em 1.5em 1.5em 1.75em;
+    background: var(--primary-wash);
+    border-left: 4px solid var(--primary);
+    border-radius: var(--radius-md);
+    font-style: normal;
+    color: var(--foreground);
+  }
+  .prose blockquote p {
+    margin: 0.4em 0;
+    font-size: 1rem;
+    line-height: 1.65;
+  }
+  .prose blockquote p:first-child {
+    font-family: var(--font-display);
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: var(--foreground);
+    margin-bottom: 0.6em;
+  }
+  .prose blockquote ul { margin: 0.5em 0 0; }
+
+  /* Inline code */
+  .prose code {
+    font-family: var(--font-mono);
+    font-size: 0.9em;
+    background: var(--muted);
+    color: var(--foreground);
+    padding: 0.15em 0.4em;
+    border-radius: 4px;
+  }
+  .prose pre {
+    font-family: var(--font-mono);
+    background: var(--muted);
+    padding: 1em 1.25em;
+    border-radius: var(--radius-md);
+    overflow-x: auto;
+    font-size: 0.875rem;
+    line-height: 1.6;
+  }
+  .prose pre code {
+    background: transparent;
+    padding: 0;
+    border-radius: 0;
+  }
+
+  /* Tables — comparison tables for the 6 AI tools, etc. */
+  .prose table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 1.75em 0;
+    font-size: 0.9375rem;
+    line-height: 1.55;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    overflow: hidden;
+  }
+  .prose thead {
+    background: var(--primary-wash);
+  }
+  .prose th {
+    font-family: var(--font-sans);
+    font-weight: 600;
+    text-align: left;
+    padding: 0.75em 1em;
+    border-bottom: 1px solid var(--border);
+    color: var(--foreground);
+    font-size: 0.8125rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  .prose td {
+    padding: 0.75em 1em;
+    border-bottom: 1px solid var(--border);
+    vertical-align: top;
+    color: var(--foreground);
+  }
+  .prose tbody tr:last-child td { border-bottom: none; }
+  .prose tbody tr:nth-child(even) { background: oklch(96% 0.014 85 / 0.4); }
+  .prose td:first-child { font-weight: 500; }
+
+  /* Horizontal rule */
+  .prose hr {
+    border: none;
+    border-top: 1px solid var(--border);
+    margin: 2.5em auto;
+    width: 30%;
+  }
+
+  /* First paragraph drop-in emphasis */
+  .prose > p:first-of-type {
+    font-size: 1.1875rem;
+    line-height: 1.65;
+    color: var(--foreground);
+  }
+
+  /* Article-specific utilities */
+  .article-meta {
+    display: flex; flex-wrap: wrap; align-items: center; gap: 12px;
+    font-family: var(--font-mono);
+    font-size: 0.8125rem;
+    color: var(--muted-foreground);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  .article-meta__dot { width: 3px; height: 3px; background: currentColor; border-radius: 50%; opacity: 0.5; }
+  .article-author-bio {
+    margin-top: 4em;
+    padding: 1.75em;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-xl);
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 1.25em;
+    align-items: center;
+  }
+  @media (max-width: 640px) {
+    .article-author-bio { grid-template-columns: 1fr; }
+  }
+  .article-author-bio__avatar {
+    width: 64px; height: 64px;
+    border-radius: 50%;
+    object-fit: cover;
+    background: var(--muted);
+  }
+  .article-author-bio__name { font-family: var(--font-display); font-size: 1.125rem; font-weight: 600; }
+  .article-author-bio__role { font-size: 0.875rem; color: var(--muted-foreground); margin-top: 2px; }
+
+  /* Article hero banner (no image — uses gradient + grain) */
+  .article-hero {
+    padding: var(--space-9) 0 var(--space-7);
+    border-bottom: 1px solid var(--border);
+    background:
+      radial-gradient(circle at 20% 0%, oklch(94% 0.025 35 / 0.6), transparent 50%),
+      radial-gradient(circle at 100% 100%, oklch(93% 0.014 85 / 0.6), transparent 50%),
+      var(--background);
+  }
+  .article-hero__inner { max-width: 68ch; margin-inline: auto; padding-inline: var(--container-padding); }
+  .article-hero__category {
+    display: inline-block;
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--primary);
+    margin-bottom: 1em;
+  }
+  .article-hero__title {
+    font-family: var(--font-display);
+    font-size: clamp(2rem, 4vw + 1rem, 3.75rem);
+    line-height: 1.05;
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    color: var(--foreground);
+    margin: 0 0 0.75em;
+    text-wrap: balance;
+  }
+  .article-hero__desc {
+    font-size: 1.1875rem;
+    line-height: 1.55;
+    color: var(--muted-foreground);
+    max-width: 60ch;
+    margin: 0 0 1.5em;
+  }
+
+  /* Article card on the list page */
+  .article-card {
+    display: block;
+    padding: var(--space-5);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-xl);
+    background: var(--card);
+    text-decoration: none;
+    color: inherit;
+    transition: transform 200ms ease, box-shadow 200ms ease, border-color 200ms ease;
+  }
+  .article-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px oklch(0% 0 0 / 0.04), 0 12px 32px oklch(0% 0 0 / 0.06);
+    border-color: var(--paper-5);
+  }
+  .article-card__date {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--muted-foreground);
+  }
+  .article-card__title {
+    font-family: var(--font-display);
+    font-size: 1.5rem;
+    line-height: 1.2;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    color: var(--foreground);
+    margin: 0.5em 0 0.4em;
+    text-wrap: balance;
+  }
+  .article-card__excerpt {
+    font-size: 0.9375rem;
+    line-height: 1.6;
+    color: var(--muted-foreground);
+    margin: 0;
+  }
+  .article-card__cta {
+    display: inline-flex; align-items: center; gap: 4px;
+    margin-top: 1.25em;
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--primary);
+  }
 }
 
 @layer utilities {

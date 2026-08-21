@@ -1,0 +1,96 @@
+---
+// src/pages/zh/insights/index.astro
+// 中文见解 / 博客列表页。
+
+import Base from '../../../layouts/Base.astro';
+import { getCollection } from 'astro:content';
+
+const articles = (await getCollection('articles-zh'))
+  .sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
+
+const featured = articles[0];
+const rest = articles.slice(1);
+
+const dateFormatter = new Intl.DateTimeFormat('zh-CN', {
+  year: 'numeric', month: 'long', day: 'numeric',
+});
+---
+
+<Base
+  title="见解"
+  description="马来西亚中小企业 AI 培训实战指南:用免费 AI 工具、HRD Corp 报销、LPPEH CPD 学时。Reese Tan,HRDC 认证 AI 培训师。"
+  path="/zh/insights"
+  type="website"
+>
+  <section class="article-hero">
+    <div class="article-hero__inner">
+      <span class="article-hero__category">见解</span>
+      <h1 class="article-hero__title">给马来西亚中小企业的实战 AI 指南。</h1>
+      <p class="article-hero__desc">
+        围绕营销、HRD Corp 报销培训、马来西亚中小企业经营,Reese Tan 写的实战指南 — 不讲理论,只讲周一早上就能用的方法。
+      </p>
+    </div>
+  </section>
+
+  {featured && (
+    <section class="section">
+      <div class="container-narrow">
+        <a href={`/zh/insights/${featured.id.replace(/\.md$/, '')}`} class="article-card" style="padding: var(--space-6);">
+          <div class="article-card__date">
+            {dateFormatter.format(featured.data.date)} · {Math.max(1, Math.round((featured.body?.length ?? 0) / 600))} 分钟阅读
+          </div>
+          <h2 class="article-card__title" style="font-size: clamp(1.75rem, 2vw + 1rem, 2.5rem);">
+            {featured.data.title}
+          </h2>
+          <p class="article-card__excerpt" style="font-size: 1.0625rem; max-width: 60ch;">
+            {featured.data.description}
+          </p>
+          <div class="article-card__cta">
+            阅读文章
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true">
+              <path d="M5 12h14M12 5l7 7-7 7" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+        </a>
+      </div>
+    </section>
+  )}
+
+  {rest.length > 0 && (
+    <section class="section section--alt">
+      <div class="container-narrow">
+        <h2 style="font-family: var(--font-display); font-size: 1.5rem; font-weight: 600; margin-bottom: var(--space-5); letter-spacing: -0.02em;">
+          更多文章
+        </h2>
+        <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: var(--space-4);">
+          {rest.map((article) => {
+            const slug = article.id.replace(/\.md$/, '');
+            return (
+              <a href={`/zh/insights/${slug}`} class="article-card">
+                <div class="article-card__date">
+                  {dateFormatter.format(article.data.date)}
+                </div>
+                <h3 class="article-card__title">{article.data.title}</h3>
+                <p class="article-card__excerpt">{article.data.description}</p>
+                <div class="article-card__cta">
+                  阅读文章
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true">
+                    <path d="M5 12h14M12 5l7 7-7 7" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                </div>
+              </a>
+            );
+          })}
+        </div>
+      </div>
+    </section>
+  )}
+
+  {articles.length === 0 && (
+    <section class="section">
+      <div class="container-narrow" style="text-align: center; padding: var(--space-9) 0;">
+        <p style="color: var(--muted-foreground);">暂无文章 — 敬请期待。</p>
+      </div>
+    </section>
+  )}
+</Base>

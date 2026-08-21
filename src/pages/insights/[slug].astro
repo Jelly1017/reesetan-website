@@ -1,0 +1,111 @@
+---
+// src/pages/insights/[slug].astro
+// English article detail page. SSR mode — look up entry by URL slug.
+import Base from '../../layouts/Base.astro';
+import { getEntry, render } from 'astro:content';
+
+const { slug } = Astro.params;
+if (!slug) return new Response('Not found', { status: 404 });
+
+// Try the entry ID with .md first (matches the file on disk); fall back to bare slug.
+let article = await getEntry('articles-en', `${slug}.md`);
+if (!article) article = await getEntry('articles-en', slug);
+if (!article) return new Response('Not found', { status: 404 });
+
+const { Content } = await render(article);
+
+const dateFormatter = new Intl.DateTimeFormat('en-MY', {
+  year: 'numeric', month: 'long', day: 'numeric',
+});
+const publishedISO = article.data.date.toISOString();
+const readingMinutes = Math.max(1, Math.round((article.body?.length ?? 0) / 1500));
+const siteUrl = Astro.site?.toString().replace(/\/$/, '') ?? 'https://reesetan.com';
+const articleUrl = `${siteUrl}/insights/${slug}`;
+const avatarUrl = `${siteUrl}/images/reese-real-portrait.jpg`;
+
+const articleSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  headline: article.data.title,
+  description: article.data.description,
+  datePublished: publishedISO,
+  dateModified: publishedISO,
+  author: {
+    '@type': 'Person',
+    name: article.data.author,
+    jobTitle: article.data.authorRole,
+    url: `${siteUrl}/about`,
+  },
+  publisher: {
+    '@type': 'Person',
+    name: 'Reese Tan',
+    logo: { '@type': 'ImageObject', url: avatarUrl },
+  },
+  mainEntityOfPage: { '@type': 'WebPage', '@id': articleUrl },
+  image: avatarUrl,
+  keywords: (article.data.keywords ?? []).join(', '),
+  inLanguage: 'en',
+};
+---
+
+<Base
+  title={article.data.title}
+  description={article.data.description}
+  path={`/insights/${slug}`}
+  type="article"
+  jsonLd={articleSchema}
+  sectionClass="article-page"
+>
+  <section class="article-hero">
+    <div class="article-hero__inner">
+      <span class="article-hero__category">Insights</span>
+      <h1 class="article-hero__title">{article.data.title}</h1>
+      <p class="article-hero__desc">{article.data.description}</p>
+      <div class="article-meta">
+        <span>{article.data.author}</span>
+        <span class="article-meta__dot"></span>
+        <span>{dateFormatter.format(article.data.date)}</span>
+        <span class="article-meta__dot"></span>
+        <span>{readingMinutes} min read</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container-narrow">
+      <article class="prose">
+        <Content />
+      </article>
+
+      <aside class="article-author-bio">
+        <img
+          src="/images/reese-real-portrait.jpg"
+          alt={article.data.author}
+          class="article-author-bio__avatar"
+          width="64"
+          height="64"
+          loading="lazy"
+        />
+        <div>
+          <div class="article-author-bio__name">{article.data.author}</div>
+          <div class="article-author-bio__role">{article.data.authorRole}</div>
+          <p style="margin: 0.75em 0 0; font-size: 0.9375rem; color: var(--muted-foreground); line-height: 1.6;">
+            15+ years in SME growth, corporate marketing, and content strategy. 500+ professionals trained across SMEs, corporate teams, and real estate agencies.
+            <a href="/#booking" style="color: var(--primary); font-weight: 500; margin-left: 4px;">
+              Book a free 15-min call →
+            </a>
+          </p>
+        </div>
+      </aside>
+
+      <div style="margin-top: var(--space-6); text-align: center;">
+        <a href="/insights" class="btn btn--secondary">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true">
+            <path d="M19 12H5M12 19l-7-7 7-7" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          All articles
+        </a>
+      </div>
+    </div>
+  </section>
+</Base>

@@ -1,0 +1,100 @@
+---
+// src/pages/insights/index.astro
+// English Insights / blog landing page.
+// Lists all articles in the `articles-en` collection, newest first.
+
+import Base from '../../layouts/Base.astro';
+import { getCollection } from 'astro:content';
+
+const articles = (await getCollection('articles-en'))
+  .sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
+
+const featured = articles[0];
+const rest = articles.slice(1);
+
+const dateFormatter = new Intl.DateTimeFormat('en-MY', {
+  year: 'numeric', month: 'long', day: 'numeric',
+});
+---
+
+<Base
+  title="Insights"
+  description="Practical guides on AI for marketing, HRD Corp claimable training, and running an SME in Malaysia. Written by Reese Tan, HRDC-Accredited AI Trainer."
+  path="/insights"
+  type="website"
+>
+  <!-- Header -->
+  <section class="article-hero">
+    <div class="article-hero__inner">
+      <span class="article-hero__category">Insights</span>
+      <h1 class="article-hero__title">Practical AI for Malaysian SMEs.</h1>
+      <p class="article-hero__desc">
+        Field-tested guides on AI for marketing, HRD Corp claimable training, and running an SME in Malaysia. No theory, only what works on a Monday morning.
+      </p>
+    </div>
+  </section>
+
+  <!-- Featured (first article) -->
+  {featured && (
+    <section class="section">
+      <div class="container-narrow">
+        <a href={`/insights/${featured.id.replace(/\.md$/, '')}`} class="article-card" style="padding: var(--space-6);">
+          <div class="article-card__date">
+            {dateFormatter.format(featured.data.date)} · {Math.max(1, Math.round((featured.body?.length ?? 0) / 1500))} min read
+          </div>
+          <h2 class="article-card__title" style="font-size: clamp(1.75rem, 2vw + 1rem, 2.5rem);">
+            {featured.data.title}
+          </h2>
+          <p class="article-card__excerpt" style="font-size: 1.0625rem; max-width: 60ch;">
+            {featured.data.description}
+          </p>
+          <div class="article-card__cta">
+            Read article
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true">
+              <path d="M5 12h14M12 5l7 7-7 7" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+        </a>
+      </div>
+    </section>
+  )}
+
+  <!-- Rest of articles -->
+  {rest.length > 0 && (
+    <section class="section section--alt">
+      <div class="container-narrow">
+        <h2 style="font-family: var(--font-display); font-size: 1.5rem; font-weight: 600; margin-bottom: var(--space-5); letter-spacing: -0.02em;">
+          More articles
+        </h2>
+        <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: var(--space-4);">
+          {rest.map((article) => {
+            const slug = article.id.replace(/\.md$/, '');
+            return (
+              <a href={`/insights/${slug}`} class="article-card">
+                <div class="article-card__date">
+                  {dateFormatter.format(article.data.date)}
+                </div>
+                <h3 class="article-card__title">{article.data.title}</h3>
+                <p class="article-card__excerpt">{article.data.description}</p>
+                <div class="article-card__cta">
+                  Read article
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true">
+                    <path d="M5 12h14M12 5l7 7-7 7" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                </div>
+              </a>
+            );
+          })}
+        </div>
+      </div>
+    </section>
+  )}
+
+  {articles.length === 0 && (
+    <section class="section">
+      <div class="container-narrow" style="text-align: center; padding: var(--space-9) 0;">
+        <p style="color: var(--muted-foreground);">No articles yet — check back soon.</p>
+      </div>
+    </section>
+  )}
+</Base>
