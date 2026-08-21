@@ -9,18 +9,16 @@ const { locale } = Astro.props;
 const isZh = locale === 'zh';
 
 // Curated gallery of real past training
+// No duplicate images — every photo/posters is a distinct event shot.
 const photos = [
   { src: '/images/training-classroom-funnel.jpg', alt: 'Full training room with 30+ attendees', caption: 'Recent Cohort · 2026' },
   { src: '/images/training-funnel-coral.jpg', alt: 'Reese presenting the lead-conversion framework', caption: 'Lead-Funnel Workshop · 2025' },
   { src: '/images/training-group-v2.jpg', alt: 'Group training cohort', caption: 'Group Cohort · 2026' },
-  { src: '/images/training-large-room.jpg', alt: 'Large training room in session', caption: 'Full Room · 2026' },
-  { src: '/images/training-presenter-coral.jpg', alt: 'Reese presenting on stage', caption: 'Stage Talk · 2025' },
   { src: '/images/event-poster-aug13-hartamas.jpg', alt: 'AI-Powered Real Estate event poster', caption: 'AI Real Estate · Aug 2025', poster: true },
   { src: '/images/training-group-large.webp', alt: 'Group training session', caption: 'Group Training · 2024' },
   { src: '/images/training-group-hartamas.webp', alt: 'Hartamas group training', caption: 'Hartamas Cohort · 2024' },
   { src: '/images/training-group1.jpg', alt: 'Training in action', caption: 'Workshop · 2024' },
-  { src: '/images/poster-oct28-v1.png', alt: 'Event poster October 28 v1', caption: 'Event · Oct 28 (v1)', poster: true },
-  { src: '/images/poster-oct28-v2.png', alt: 'Event poster October 28 v2', caption: 'Event · Oct 28 (v2)', poster: true },
+  { src: '/images/poster-oct28-v2.png', alt: 'Mastering AI event poster October 28', caption: 'Event · Oct 28', poster: true },
   { src: '/images/poster-jan16-sales.png', alt: 'Sales event poster Jan 16', caption: 'Sales Workshop · Jan 16', poster: true },
   { src: '/images/poster-mar21-canva.png', alt: 'Canva workshop poster Mar 21', caption: 'Canva Workshop · Mar 21', poster: true },
   { src: '/images/poster-may22.png', alt: 'May 22 event poster', caption: 'Event · May 22', poster: true },
