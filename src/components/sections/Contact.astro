@@ -40,37 +40,28 @@ const isZh = locale === 'zh';
 
           <div style="display: flex; flex-direction: column; gap: 20px;">
             <div>
-              <div style="font-size: 12px; color: var(--muted-foreground); text-transform: uppercase; letter-spacing: 0.05em; font-weight: 600; margin-bottom: 4px;">WhatsApp</div>
-              <a href="https://wa.me/60163356790" target="_blank" rel="noopener" style="font-size: 1.0625rem; color: var(--primary); font-weight: 500;">
+              <div class="contact-label">{isZh ? 'WhatsApp' : 'WhatsApp'}</div>
+              <a href="https://wa.me/60163356790" target="_blank" rel="noopener" class="contact-value contact-value--primary">
                 +60 16-335 6790
               </a>
-              <div style="font-size: 13px; color: var(--muted-foreground);">{isZh ? '首选联系方式' : 'Preferred contact method'}</div>
+              <div class="contact-sub">{isZh ? '首选联系方式' : 'Preferred contact method'}</div>
             </div>
 
             <div>
-              <div style="font-size: 12px; color: var(--muted-foreground); text-transform: uppercase; letter-spacing: 0.05em; font-weight: 600; margin-bottom: 4px;">Email</div>
-              <a href="mailto:hello@reesetan.com" style="font-size: 1.0625rem;">hello@reesetan.com</a>
+              <div class="contact-label">{isZh ? '邮箱' : 'Email'}</div>
+              <a href="mailto:hello@reesetan.com" class="contact-value">hello@reesetan.com</a>
             </div>
 
             <div>
-              <div style="font-size: 12px; color: var(--muted-foreground); text-transform: uppercase; letter-spacing: 0.05em; font-weight: 600; margin-bottom: 4px;">{isZh ? '地址' : 'Address'}</div>
-              <div style="font-size: 14px; line-height: 1.5;">
-                Level 13, Block A, Menara Prima<br>
-                Jalan PJU 1/37, Dataran Prima<br>
-                47301 Petaling Jaya, Selangor
-              </div>
-            </div>
-
-            <div>
-              <div style="font-size: 12px; color: var(--muted-foreground); text-transform: uppercase; letter-spacing: 0.05em; font-weight: 600; margin-bottom: 4px;">{isZh ? '工作时间' : 'Hours'}</div>
-              <div style="font-size: 14px;">{isZh ? '周一至周五 9:00–18:00' : 'Mon–Fri 9:00–18:00 MYT'}</div>
+              <div class="contact-label">{isZh ? '工作时间' : 'Hours'}</div>
+              <div class="contact-value contact-value--plain">{isZh ? '周一至周五 9:00–18:00' : 'Mon–Fri 9:00–18:00 MYT'}</div>
             </div>
           </div>
 
           <hr style="margin: 24px 0; border: none; border-top: 1px solid var(--border);" />
 
           <div>
-            <div style="font-size: 12px; color: var(--muted-foreground); text-transform: uppercase; letter-spacing: 0.05em; font-weight: 600; margin-bottom: 12px;">{isZh ? '关注我' : 'Follow'}</div>
+            <div class="contact-label">{isZh ? '关注我' : 'Follow'}</div>
             <div style="display: flex; gap: 12px;">
               <a href="https://www.linkedin.com/in/reesetan/" target="_blank" rel="noopener" class="badge badge--subtle">
                 LinkedIn
@@ -81,17 +72,42 @@ const isZh = locale === 'zh';
             </div>
           </div>
         </div>
-
-        <!-- Map -->
-        <div style="margin-top: 16px; border-radius: var(--radius-lg); overflow: hidden; border: 1px solid var(--border); aspect-ratio: 4/3;">
-          <iframe
-            src="https://www.openstreetmap.org/export/embed.html?bbox=101.5945%2C3.0994%2C101.6185%2C3.1154&layer=mapnik&marker=3.1074%2C101.6065"
-            style="width: 100%; height: 100%; border: 0;"
-            title="Office location map"
-            loading="lazy"
-          ></iframe>
-        </div>
       </div>
     </div>
   </div>
 </section>
+
+<style>
+  /* Direct contact card — single, consistent type scale */
+  .contact-label {
+    font-family: var(--font-sans);
+    font-size: 12px;
+    font-weight: 600;
+    line-height: 1;
+    color: var(--muted-foreground);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-bottom: 8px;
+  }
+  .contact-value {
+    display: block;
+    font-family: var(--font-sans);
+    font-size: 1.0625rem;   /* 17px */
+    font-weight: 500;
+    line-height: 1.45;
+    color: var(--foreground);
+    text-decoration: none;
+  }
+  .contact-value:hover { color: var(--primary); }
+  .contact-value--primary { color: var(--primary); }
+  .contact-value--primary:hover { color: var(--primary-hover); }
+  .contact-value--plain { color: var(--foreground); text-decoration: none; }
+  .contact-sub {
+    font-family: var(--font-sans);
+    font-size: 13px;
+    font-weight: 400;
+    line-height: 1.5;
+    color: var(--muted-foreground);
+    margin-top: 4px;
+  }
+</style>
