@@ -123,32 +123,50 @@ const usps = isZh ? [
       </div>
     </div>
 
-    <!-- Video -->
-    <div style="margin-top: 64px;">
-      <h3 style="margin: 0 0 16px;">
-        {isZh ? 'AI 工具实操演示' : 'AI Tools in Action — Watch This'}
-      </h3>
-      <div style="aspect-ratio: 16/9; border-radius: var(--radius-xl); overflow: hidden; box-shadow: 0 2px 4px oklch(0% 0 0 / 0.04), 0 8px 24px oklch(0% 0 0 / 0.06);">
-        <video
-          controls
-          preload="metadata"
-          playsinline
-          poster="/images/aichatbot-demo-poster.jpg"
-          style="width: 100%; height: 100%; background: #000;"
-          aria-label={isZh ? 'AI 工具实操演示视频' : 'AI tools live demo video'}
-        >
-          <source src="/videos/aichatbot-demo.mp4" type="video/mp4" />
-          <p>{isZh ? '您的浏览器不支持视频。' : 'Your browser does not support video.'} <a href="https://www.youtube.com/shorts/F_xJ25AFyCM" target="_blank" rel="noopener">{isZh ? '在 YouTube 上观看' : 'Watch on YouTube'}</a></p>
-        </video>
+    <!-- Video demo: 2-column with YouTube embed (auto-thumbnail) on left, copy on right -->
+    <div class="video-demo" style="margin-top: 64px;">
+      <style>
+        @media (min-width: 1024px) {
+          .video-demo { display: grid; grid-template-columns: minmax(0, 360px) 1fr; gap: 48px; align-items: center; }
+        }
+      </style>
+      <div style="position: relative; aspect-ratio: 9/16; max-width: 360px; border-radius: var(--radius-xl); overflow: hidden; box-shadow: 0 2px 4px oklch(0% 0 0 / 0.04), 0 8px 24px oklch(0% 0 0 / 0.12); background: #000;">
+        <iframe
+          src="https://www.youtube.com/embed/F_xJ25AFyCM?rel=0"
+          title={isZh ? 'AI 工具实操演示' : 'AI Tools in Action — Live Demo'}
+          style="position: absolute; inset: 0; width: 100%; height: 100%; border: 0;"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          allowfullscreen
+          loading="lazy"
+        ></iframe>
       </div>
-      <p style="margin-top: 12px; color: var(--muted-foreground); font-size: 14px;">
-        {isZh
-          ? 'AI 工具实操演示 — 这就是您将在培训中学会构建的。'
-          : 'A live demonstration of AI tools in action — exactly what you\'ll learn to build in the training.'}{' '}
-        <a href="https://www.youtube.com/shorts/F_xJ25AFyCM" target="_blank" rel="noopener" style="color: var(--primary); font-weight: 500;">
-          {isZh ? '在 YouTube 上观看 →' : 'Watch on YouTube →'}
+      <div>
+        <h3 style="margin: 0 0 12px;">
+          {isZh ? 'AI 工具实操演示' : 'AI Tools in Action — Watch This'}
+        </h3>
+        <p style="color: var(--muted-foreground); margin: 0 0 20px; font-size: 1rem;">
+          {isZh
+            ? '19 秒演示,真实业务场景:从 WhatsApp 线索到 AI 客户评分到 CRM 入库 — 没有幻灯片,只看效果。'
+            : 'A 19-second live demo. Real WhatsApp lead → AI qualification → CRM entry. No slides, just results — exactly what you\'ll learn to build in the training.'}
+        </p>
+        <ul style="margin: 0 0 20px; padding: 0; list-style: none; display: grid; gap: 10px;">
+          <li style="display: flex; align-items: start; gap: 10px; font-size: 14px; color: var(--foreground);">
+            <span style="color: var(--primary); font-weight: 700; flex-shrink: 0;">✓</span>
+            {isZh ? '一个 prompt 替代 3 个工具' : 'One prompt replaces 3 separate tools'}
+          </li>
+          <li style="display: flex; align-items: start; gap: 10px; font-size: 14px; color: var(--foreground);">
+            <span style="color: var(--primary); font-weight: 700; flex-shrink: 0;">✓</span>
+            {isZh ? '客户从 WhatsApp 进入到 AI 评分只需几秒' : 'Lead captured → AI-scored in seconds, not hours'}
+          </li>
+          <li style="display: flex; align-items: start; gap: 10px; font-size: 14px; color: var(--foreground);">
+            <span style="color: var(--primary); font-weight: 700; flex-shrink: 0;">✓</span>
+            {isZh ? '全部使用免费 AI 工具 — 无需订阅' : 'Built entirely with free AI tools — no subscription'}
+          </li>
+        </ul>
+        <a href="https://www.youtube.com/shorts/F_xJ25AFyCM" target="_blank" rel="noopener" style="display: inline-flex; align-items: center; gap: 6px; color: var(--primary); font-weight: 600; font-size: 14px;">
+          {isZh ? '在 YouTube 上观看完整视频 →' : 'Watch full demo on YouTube →'}
         </a>
-      </p>
+      </div>
     </div>
   </div>
 </section>
