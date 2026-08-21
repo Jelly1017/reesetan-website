@@ -34,7 +34,8 @@ const { title, description, path, ogImage, type, jsonLd, sectionClass, hideNav, 
 const meta = pageMeta({ title, description, locale: getLocaleFromPath(Astro.url.pathname), path, ogImage, type });
 const locale: Locale = getLocaleFromPath(Astro.url.pathname);
 const siteUrl = getSiteUrl();
-const fullTitle = title === 'Reese Tan' ? 'Reese Tan | AI Trainer for SMEs & Corporate Teams | Malaysia' : `${title} · Reese Tan`;
+// fullTitle now comes from pageMeta so it matches og:title and twitter:title
+const fullTitle = meta.title;
 const jsonLdArray = jsonLd ? (Array.isArray(jsonLd) ? jsonLd : [jsonLd]) : [];
 ---
 

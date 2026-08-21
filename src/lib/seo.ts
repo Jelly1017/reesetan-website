@@ -31,14 +31,21 @@ export function pageMeta(opts: {
   const image = ogImage || getOgImage();
   const ogLocale = locale === 'zh' ? 'zh_CN' : 'en_MY';
 
+  // Use the full SEO title for <title>, og:title, and twitter:title so
+  // link previews (WhatsApp / iMessage / LinkedIn / Slack) show the
+  // same full title that the browser tab shows — not the bare brand name.
+  const fullTitle = title === SITE_NAME
+    ? `${SITE_NAME} | AI Trainer for SMEs & Corporate Teams | Malaysia`
+    : `${title} · ${SITE_NAME}`;
+
   return {
-    title,
+    title: fullTitle,
     description,
     canonical: url,
     openGraph: {
       type,
       url,
-      title,
+      title: fullTitle,
       description,
       image,
       siteName: SITE_NAME,
@@ -46,7 +53,7 @@ export function pageMeta(opts: {
     },
     twitter: {
       card: 'summary_large_image',
-      title,
+      title: fullTitle,
       description,
       image,
     },
