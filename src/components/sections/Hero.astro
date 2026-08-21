@@ -1,9 +1,9 @@
 ---
 // src/components/sections/Hero.astro
 // Above-the-fold hero. Order (per design system spec):
-//   credential pills → H1 → sub → description → chips → CTA + risk reducer
-//   → trust line → portrait card
-// Right column: portrait card with LPPEH badge.
+//   brand mark → H1 → sub → description → chips → trust pills → CTAs + risk reducer
+//   → trust line → training photo
+// Right column: editorial training photo (Reese pointing at Canva screen).
 
 import CalEmbed from '../booking/CalEmbed.astro';
 
@@ -16,46 +16,37 @@ const isZh = locale === 'zh';
 
 <section class="section section--hero" id="hero">
   <div class="container-2xl">
-    <div style="display: grid; grid-template-columns: 1fr; gap: 64px;" class="hero-grid">
+    <div style="display: grid; grid-template-columns: 1fr; gap: 48px;" class="hero-grid">
       <style>
         @media (min-width: 1024px) {
-          .hero-grid { grid-template-columns: 1.1fr 0.9fr !important; align-items: center; }
+          .hero-grid { grid-template-columns: 1.1fr 0.9fr !important; align-items: center; gap: 64px !important; }
         }
       </style>
 
       <!-- LEFT: copy + CTAs + booking -->
       <div>
-        <!-- Credential pills -->
-        <div style="display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 24px;">
-          <span class="badge badge--outlined">
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-            {isZh ? 'HRDC 认证培训师' : 'HRDC Accredited Trainer'}
-          </span>
-          <span class="badge badge--outlined">
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-            {isZh ? 'HRD Corp 可报销' : 'HRD Corp Claimable'}
-          </span>
-          <span class="badge badge--outlined">
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/></svg>
-            {isZh ? 'LPPEH 5 CPD 学时' : 'LPPEH 5 CPD Hours'}
-          </span>
+        <!-- Brand mark: Reese. -->
+        <div style="display: flex; align-items: baseline; gap: 2px; margin-bottom: 24px;">
+          <span class="kinetic-fraunces" style="font-size: 2.5rem; font-weight: 700; color: var(--foreground); letter-spacing: -0.04em; line-height: 1;">Reese</span>
+          <span style="display: inline-block; width: 12px; height: 12px; border-radius: 50%; background: #e8553a; margin-left: 4px; transform: translateY(-2px);"></span>
         </div>
 
         <!-- H1 — kinetic Fraunces (Option B signature) -->
         <h1 class="kinetic-fraunces" style="margin: 0 0 16px;">
-          {isZh ? (
-            <>把每周浪费的<br><span class="text-coral">10 小时</span><br>还给团队</>
-          ) : (
-            <>Stop Wasting<br><span class="text-coral">10 Hours a Week</span><br>on Manual Work.</>
-          )}
+          {isZh ? '中小企业与企业的 AI 培训师' : 'AI Trainer for SMEs & Corporate Teams'}
         </h1>
 
         <!-- Sub-headline -->
-        <p style="font-size: 1.25rem; line-height: 1.4; color: var(--foreground); max-width: 50ch; margin: 0 0 16px;">
-          {isZh
-            ? '您的团队已经在用 AI 了 — 但用对了吗?'
-            : 'Your team is already using AI — but are they using it the right way?'}
+        <p style="font-size: 1.25rem; line-height: 1.4; color: var(--foreground); max-width: 50ch; margin: 0 0 24px;">
+          {isZh ? '每周别再浪费 10 小时在手动工作上。' : 'Stop wasting 10 hours a week on manual work.'}
         </p>
+
+        <!-- Trust pills -->
+        <div style="display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 32px;">
+          <span class="badge badge--outlined" style="font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; font-size: 11px;">{isZh ? 'HRDC 认证' : 'HRDC ACCREDITED'}</span>
+          <span class="badge badge--outlined" style="font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; font-size: 11px;">{isZh ? 'HRD CORP 可申请' : 'HRD CORP CLAIMABLE'}</span>
+          <span class="badge badge--outlined" style="font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; font-size: 11px;">{isZh ? 'LPPEH 5 CPD 学时' : 'LPPEH 5 CPD HOURS'}</span>
+        </div>
 
         <!-- Description -->
         <p style="color: var(--muted-foreground); max-width: 55ch; margin: 0 0 24px;">
@@ -106,24 +97,17 @@ const isZh = locale === 'zh';
         </div>
       </div>
 
-      <!-- RIGHT: editorial studio portrait of Reese (clean, no card chrome) -->
+      <!-- RIGHT: retouched training photo (Reese pointing at Canva screen) -->
       <div style="position: relative;">
         <img
-          src="/images/training-hero-studio.jpg"
+          src="/images/training-hero-classroom.jpg"
           alt={isZh ? 'Reese Tan,AI 培训师' : 'Reese Tan, AI trainer'}
-          style="width: 100%; aspect-ratio: 4/3; object-fit: cover; object-position: center 20%; border-radius: var(--radius-lg);"
+          style="width: 100%; aspect-ratio: 4/3; object-fit: cover; object-position: center 18%; border-radius: var(--radius-lg);"
           loading="eager"
           fetchpriority="high"
-          width="1280"
-          height="853"
+          width="1920"
+          height="1440"
         />
-        <!-- Floating stat card -->
-        <div class="card" style="position: absolute; bottom: -24px; left: -24px; padding: 16px 20px; max-width: 220px; box-shadow: 0 8px 24px oklch(0% 0 0 / 0.10);">
-          <div class="text-mono" style="font-size: 1.75rem; font-weight: 700; color: var(--primary); line-height: 1;">70%</div>
-          <div style="font-size: 12px; color: var(--muted-foreground); margin-top: 4px;">
-            {isZh ? '内容创作时间减少' : 'content creation time saved'}
-          </div>
-        </div>
       </div>
     </div>
 
