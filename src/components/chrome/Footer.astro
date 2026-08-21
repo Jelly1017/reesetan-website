@@ -41,10 +41,10 @@ const t = (en: string, zh: string) => locale === 'zh' ? zh : en;
       <div class="footer__col">
         <h4>{t('Services', '服务')}</h4>
         <ul>
-          <li><a href={localizedPath(locale, '/services')}>{t('SME & Corporate Training', '中小企业培训')}</a></li>
-          <li><a href={localizedPath(locale, '/services')}>{t('Hourly Consultation', '小时咨询')}</a></li>
-          <li><a href={localizedPath(locale, '/services')}>{t('Strategy Review', '营销策略审核')}</a></li>
-          <li><a href={localizedPath(locale, '/training')}>{t('Mastering AI Programme', 'Mastering AI 课程')}</a></li>
+          <li><a href={localizedPath(locale, '/#services')}>{t('SME & Corporate Training', '中小企业培训')}</a></li>
+          <li><a href={localizedPath(locale, '/#services')}>{t('Hourly Consultation', '小时咨询')}</a></li>
+          <li><a href={localizedPath(locale, '/#services')}>{t('Strategy Review', '营销策略审核')}</a></li>
+          <li><a href={localizedPath(locale, '/#training')}>{t('Mastering AI Programme', 'Mastering AI 课程')}</a></li>
         </ul>
       </div>
 
@@ -52,10 +52,10 @@ const t = (en: string, zh: string) => locale === 'zh' ? zh : en;
       <div class="footer__col">
         <h4>{t('Company', '公司')}</h4>
         <ul>
-          <li><a href={localizedPath(locale, '/about')}>{t('About Reese', '关于 Reese')}</a></li>
-          <li><a href={localizedPath(locale, '/gallery')}>{t('Past Training', '过往培训')}</a></li>
+          <li><a href={localizedPath(locale, '/#about')}>{t('About Reese', '关于 Reese')}</a></li>
+          <li><a href={localizedPath(locale, '/#past-training')}>{t('Past Training', '过往培训')}</a></li>
           <li><a href={localizedPath(locale, '/insights')}>{t('Insights', '见解')}</a></li>
-          <li><a href={localizedPath(locale, '/contact')}>{t('Contact', '联系')}</a></li>
+          <li><a href={localizedPath(locale, '/#contact')}>{t('Contact', '联系')}</a></li>
         </ul>
       </div>
 
@@ -75,10 +75,8 @@ const t = (en: string, zh: string) => locale === 'zh' ? zh : en;
 
     <div class="footer__bottom">
       <div>© {year} Reese Tan. {t('All rights reserved.', '版权所有。')}</div>
-      <div>
-        <a href={localizedPath(locale, '/legal/privacy')}>{t('Privacy', '隐私')}</a>
-        &nbsp;·&nbsp;
-        <a href={localizedPath(locale, '/legal/terms')}>{t('Terms', '条款')}</a>
+      <div style="color: var(--muted-foreground);">
+        {t('Privacy', '隐私')} · {t('Terms', '条款')}
       </div>
     </div>
   </div>
