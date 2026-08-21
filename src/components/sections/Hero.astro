@@ -106,30 +106,19 @@ const isZh = locale === 'zh';
         </div>
       </div>
 
-      <!-- RIGHT: workshop-in-action card (the visual promise of the page) -->
+      <!-- RIGHT: editorial studio portrait of Reese (clean, no card chrome) -->
       <div style="position: relative;">
-        <div class="card" style="padding: 0; overflow: hidden; position: relative; aspect-ratio: 4/3; box-shadow: 0 4px 12px oklch(0% 0 0 / 0.06), 0 20px 48px oklch(0% 0 0 / 0.12);">
-          <img
-            src="/images/training-hero.jpg"
-            alt={isZh ? 'Reese Tan 在 AI 培训现场授课' : 'Reese Tan delivering an AI training workshop'}
-            style="width: 100%; height: 100%; object-fit: cover; object-position: center;"
-            loading="eager"
-            fetchpriority="high"
-            width="1280"
-            height="853"
-          />
-          <!-- LPPEH badge top-right -->
-          <div style="position: absolute; top: 16px; right: 16px; padding: 8px 14px; background: var(--primary); color: white; border-radius: 999px; font-size: 11px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase;">
-            LPPEH · 5 CPD
-          </div>
-          <!-- Bottom info bar -->
-          <div style="position: absolute; bottom: 0; left: 0; right: 0; padding: 20px; background: linear-gradient(to top, oklch(0% 0 0 / 0.7), transparent); color: white;">
-            <div style="font-size: 12px; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; opacity: 0.85;">In Session</div>
-            <div style="font-size: 14px; font-weight: 500;">AI Workshop · 30+ pax · KL</div>
-          </div>
-        </div>
+        <img
+          src="/images/training-hero-studio.jpg"
+          alt={isZh ? 'Reese Tan,AI 培训师' : 'Reese Tan, AI trainer'}
+          style="width: 100%; aspect-ratio: 4/3; object-fit: cover; object-position: center 20%; border-radius: var(--radius-lg);"
+          loading="eager"
+          fetchpriority="high"
+          width="1280"
+          height="853"
+        />
         <!-- Floating stat card -->
-        <div class="card" style="position: absolute; bottom: -24px; left: -24px; padding: 16px 20px; max-width: 200px;">
+        <div class="card" style="position: absolute; bottom: -24px; left: -24px; padding: 16px 20px; max-width: 220px; box-shadow: 0 8px 24px oklch(0% 0 0 / 0.10);">
           <div class="text-mono" style="font-size: 1.75rem; font-weight: 700; color: var(--primary); line-height: 1;">70%</div>
           <div style="font-size: 12px; color: var(--muted-foreground); margin-top: 4px;">
             {isZh ? '内容创作时间减少' : 'content creation time saved'}
