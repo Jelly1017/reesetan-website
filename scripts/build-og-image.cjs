@@ -1,20 +1,21 @@
-// Build a 1200x630 OG share card using Reese's retouched training photo
-// (the Canva-screen classroom shot, face 3/4 to camera, slight smile, slimmer).
+// Build a 1200x630 OG share card using Reese's in-the-room coaching photo
+// (Reese coaching a participant who is looking at his phone, with the
+// Hartamas® logo visible in the top-right of the source).
 const sharp = require('sharp');
 const fs = require('fs');
 
-const photoPath = 'public/images/training-hero-classroom.jpg';
+const photoPath = 'public/images/training-coaching.jpg';
 const W = 1200, H = 630;
 const rightW = Math.round(W * 0.58);  // 696 px reserved for the photo column
 
-// Source: 2400x1792 (4:3). We keep the top 80% (cuts the audience member's
-// head at the bottom) and the full width, then resize-cover to the right
-// column. Result: AV rack on the left, Reese pointing in the middle, Canva
-// "First Impressions Matter" screen on the right.
+// Source: 2048x1536 (4:3). We keep the top ~80% to crop out the
+// face-mask participant in the bottom-right, then resize-cover to the
+// right column. The dark text panel on the left covers Reese's body; the
+// clear right strip reveals the participant + his phone + Hartamas logo.
 sharp(photoPath)
   .metadata()
   .then(meta => {
-    const cropH = Math.round(meta.height * 0.82);  // ~1469 px, cuts bottom 18%
+    const cropH = Math.round(meta.height * 0.80);  // 1228 px, cuts the bottom 20%
     return sharp(photoPath)
       .extract({
         left: 0,
