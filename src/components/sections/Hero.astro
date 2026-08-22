@@ -5,8 +5,6 @@
 //   → trust line → training photo
 // Right column: editorial training photo (Reese pointing at Canva screen).
 
-import CalEmbed from '../booking/CalEmbed.astro';
-
 export interface Props {
   locale: 'en' | 'zh';
 }
@@ -108,22 +106,6 @@ const isZh = locale === 'zh';
           height="1536"
         />
       </div>
-    </div>
-
-    <!-- Booking section (Cal.com embed) -->
-    <div id="booking" style="margin-top: 96px;">
-      <div style="text-align: center; max-width: 600px; margin: 0 auto 32px;">
-        <span class="badge badge--outlined" style="margin-bottom: 12px;">{isZh ? '预约咨询' : 'Book a Consultation'}</span>
-        <h2 style="margin: 0 0 12px;">
-          {isZh ? '挑一个适合您的时间' : 'Pick a time that works for you'}
-        </h2>
-        <p style="color: var(--muted-foreground);">
-          {isZh
-            ? '15 分钟免费通话,了解您团队的痛点,给出具体建议。'
-            : '15-minute free call. We\'ll talk through your team\'s pain points and I\'ll give you specific, actionable advice.'}
-        </p>
-      </div>
-      <CalEmbed layout="month_view" />
     </div>
   </div>
 </section>
