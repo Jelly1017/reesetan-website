@@ -1,0 +1,124 @@
+---
+// src/components/sections/Stats.astro
+// Big-stat band: "Why now" / Malaysia's AI adoption moment.
+// Four sourced numbers, coral accent, sits between About and Services
+// to set context before the visitor reads the services list.
+
+export interface Props {
+  locale: 'en' | 'zh';
+}
+const { locale } = Astro.props;
+const isZh = locale === 'zh';
+
+const stats = isZh ? [
+  {
+    n: 'US$115B',
+    label: '预计到 2030 年,AI 将为马来西亚 GDP 贡献的金额',
+    src: '来源:Microsoft · Kearney',
+  },
+  {
+    n: '70%',
+    label: '马来西亚企业已在至少一个业务环节中使用 AI',
+    src: '来源:IBM 全球 AI 采用调查 2024',
+  },
+  {
+    n: '63%',
+    label: '马来西亚 CEO 认为 AI 是未来两年增长的关键',
+    src: '来源:IDC 亚太 CEO 调查',
+  },
+  {
+    n: 'RM 15.7B',
+    label: '马来西亚 AI 市场规模,预计每年增长约 30%',
+    src: '来源:MDEC · Statista',
+  },
+] : [
+  {
+    n: 'US$115B',
+    label: 'AI\'s projected contribution to Malaysia\'s GDP by 2030',
+    src: 'Source: Microsoft · Kearney',
+  },
+  {
+    n: '70%',
+    label: 'Malaysian organisations now use AI in at least one business function',
+    src: 'Source: IBM Global AI Adoption Survey 2024',
+  },
+  {
+    n: '63%',
+    label: 'Malaysian CEOs say AI is critical to growth in the next 2 years',
+    src: 'Source: IDC Asia/Pacific CEO Survey',
+  },
+  {
+    n: 'RM 15.7B',
+    label: 'Malaysia\'s AI market size, growing ~30% year-on-year through 2030',
+    src: 'Source: MDEC · Statista',
+  },
+];
+---
+
+<section class="section section--alt section--stats" id="stats">
+  <div class="container-2xl">
+    <div style="text-align: center; max-width: 600px; margin: 0 auto 56px;">
+      <span class="badge badge--outlined" style="margin-bottom: 12px;">{isZh ? '为什么是现在' : 'Why Now'}</span>
+      <h2 style="margin: 0 0 12px;">{isZh ? '马来西亚的 AI 时刻已经到来' : 'Malaysia\'s AI moment is here'}</h2>
+      <p style="color: var(--muted-foreground); font-size: 1.0625rem;">
+        {isZh ? '四个数字,告诉您为什么 2026 年是团队必须学会用 AI 的一年。' : 'Four numbers. They tell you why 2026 is the year your team has to learn to use AI.'}
+      </p>
+    </div>
+
+    <div class="stats-grid">
+      {stats.map(s => (
+        <div class="stat-card">
+          <div class="stat-card__num">{s.n}</div>
+          <div class="stat-card__label">{s.label}</div>
+          <div class="stat-card__src">{s.src}</div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .stats-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+  @media (min-width: 640px) {
+    .stats-grid { grid-template-columns: 1fr 1fr; gap: 24px; }
+  }
+  @media (min-width: 1024px) {
+    .stats-grid { grid-template-columns: repeat(4, 1fr); gap: 28px; }
+  }
+  .stat-card {
+    padding: 32px 24px;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .stat-card__num {
+    font-family: var(--font-display);
+    font-size: clamp(2.5rem, 3.5vw + 0.75rem, 3.75rem);
+    font-weight: 700;
+    line-height: 1;
+    color: var(--primary);
+    letter-spacing: -0.02em;
+  }
+  .stat-card__label {
+    font-size: 14px;
+    line-height: 1.5;
+    color: var(--foreground);
+    font-weight: 500;
+  }
+  .stat-card__src {
+    font-size: 11px;
+    line-height: 1.4;
+    color: var(--muted-foreground);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-top: auto;
+    padding-top: 8px;
+  }
+</style>
