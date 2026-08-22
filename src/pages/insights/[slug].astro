@@ -2,6 +2,7 @@
 // src/pages/insights/[slug].astro
 // English article detail page. SSR mode — look up entry by URL slug.
 import Base from '../../layouts/Base.astro';
+import CalEmbed from '../../components/booking/CalEmbed.astro';
 import { getEntry, render } from 'astro:content';
 
 const { slug } = Astro.params;
@@ -106,6 +107,16 @@ const articleSchema = {
           All articles
         </a>
       </div>
+    </div>
+  </section>
+
+  <!-- Minimal booking CTA at the bottom of every article -->
+  <section class="article-cta">
+    <div class="container-narrow" style="text-align: center;">
+      <span class="badge badge--outlined" style="margin-bottom: 16px;">Book a Consultation</span>
+      <h2 class="article-cta__title">Pick a time that works for you</h2>
+      <p class="article-cta__sub">15-minute free call. We'll talk through your team's pain points and I'll give you specific, actionable advice.</p>
+      <CalEmbed layout="month_view" />
     </div>
   </section>
 </Base>

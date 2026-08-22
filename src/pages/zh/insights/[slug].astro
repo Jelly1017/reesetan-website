@@ -2,6 +2,7 @@
 // src/pages/zh/insights/[slug].astro
 // 中文文章详情页。SSR 模式 — 通过 URL slug 查找条目。
 import Base from '../../../layouts/Base.astro';
+import CalEmbed from '../../../components/booking/CalEmbed.astro';
 import { getEntry, render } from 'astro:content';
 
 const { slug } = Astro.params;
@@ -105,6 +106,16 @@ const articleSchema = {
           返回所有文章
         </a>
       </div>
+    </div>
+  </section>
+
+  <!-- 文章底部最小预约区 -->
+  <section class="article-cta">
+    <div class="container-narrow" style="text-align: center;">
+      <span class="badge badge--outlined" style="margin-bottom: 16px;">预约咨询</span>
+      <h2 class="article-cta__title">挑一个适合您的时间</h2>
+      <p class="article-cta__sub">15 分钟免费通话,了解您团队的痛点,给出具体可执行的建议。</p>
+      <CalEmbed layout="month_view" />
     </div>
   </section>
 </Base>
